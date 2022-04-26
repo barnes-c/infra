@@ -1,0 +1,8 @@
+nextcloud:
+  host: "nextcloud.barnes.biz"
+  username: "admin"
+persistence:
+  enabled: true
+  existingClaim: "nextcloud-ssd"
+  accessMode: ReadWriteOnce
+  size: "50Gi"
