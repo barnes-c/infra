@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "nextcloud.barnes.biz"
+        - "drive.barnes.biz"
       secretName: "nextcloud-prod-tls"
   rules:
-    - host: "nextcloud.barnes.biz"
+    - host: "drive.barnes.biz"
       http:
         paths:
           - path: /

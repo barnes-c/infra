@@ -1,5 +1,5 @@
 nextcloud:
-  host: "nextcloud.barnes.biz"
+  host: "drive.barnes.biz"
   username: "admin"
 persistence:
   enabled: true
