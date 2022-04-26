@@ -1,0 +1,6 @@
+namespace: metallb-system
+
+resources:
+  - namespace.yaml
+  - manifests-v0.12.1.yaml
+  - configmap.yaml
