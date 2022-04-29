@@ -17,19 +17,19 @@ By default, the router assigns an arbitrary IP address to the device which means
 Edit the file `/etc/dhcpcd.conf` and add the four lines below:
 
 ```bash
-**interface** eth0
-**static** ip_address=192.168.0.<X>/24
-**static** routers=192.168.0.1
-**static** domain_name_servers=1.1.1.1
+interface eth0
+static ip_address=192.168.0.<X>/24
+static routers=192.168.0.1
+static domain_name_servers=1.1.1.1
 ```
 
 or this if you are using Wi-fi
 
 ```bash
-**interface wlan0**
-**static** ip_address=192.168.0.<X>/24
-**static** routers=192.168.0.1
-**static** domain_name_servers=1.1.1.1
+interface wlan0
+static ip_address=192.168.0.<X>/24
+static routers=192.168.0.1
+static domain_name_servers=1.1.1.1
 ```
 
 ### Enable container features
