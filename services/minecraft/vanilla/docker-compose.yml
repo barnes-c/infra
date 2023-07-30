@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  mc:
+    build: .
+    env_file:
+      - ./.env
+    environment:
+      TYPE: PAPER
+      ENABLE_AUTOPAUSE: "true"
+      # ENABLE_COMMAND_BLOCK: "true"
+      ENABLE_RCON: "true"
+      # ENABLE_WHITELIST: "false"
+      EULA: "true"
+      # HARDCORE: "false"
+      # ICON: 'https://github.com/barnes-c/infrastructure/blob/master/services/minecraft/server-icon.png'
+      MAX_PLAYERS: 6
+      MEMORY: 6G
+      MOTD: "Be Happy :)"
+      # OVERRIDE_WHITELIST: "true"
+      #PROXY: "false"
+
+      SEED: 4456208549549152808
+      SERVER_NAME: 'barnes.biz'
+      SNOOPER_ENABLED: "false"
+      SPAWN_PROTECTION: 0
+      VIEW_DISTANCE: 20
+        #WHITELIST_FILE: './whitelist.json'
+      RCON_PASSWORD: '${RCON_PASSWORD}'
+      RCON_CMDS_STARTUP:  |-
+        /op mango_lover22
+      RCON_CMDS_STARTUP:  |-
+        /chunky radius 1000
+        /chunky start
+        /chunky continue
+      RCON_CMDS_FIRST_CONNECT: |-
+        /chunky pause
+      RCON_CMDS_LAST_DISCONNECT: |-
+        /chunky continue
+
+    ports:
+      - "25565:25565"
+    volumes:
+      - mc-paper:/data
+    restart: unless-stopped
+
+volumes:
+  mc-paper: {}
