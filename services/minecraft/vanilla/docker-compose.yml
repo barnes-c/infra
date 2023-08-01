@@ -12,7 +12,7 @@ services:
       # ENABLE_WHITELIST: "false"
       EULA: "true"
       # HARDCORE: "false"
-      # ICON: 'https://github.com/barnes-c/infrastructure/blob/master/services/minecraft/server-icon.png'
+      # ICON: 'https://github.com/barnes-c/infrastructure/blob/master/assets/server-icon.png'
       MAX_PLAYERS: 6
       MEMORY: 6G
       MOTD: "Be Happy :)"

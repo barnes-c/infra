@@ -4,7 +4,7 @@ Fist of all, we need to install and configure **Raspbian Linux Operating System
 
 We are adding an SSD because Micro SD cards are not reliable and the bunch of Read/Write Requests from Kubernetes would pretty quick destroy a Micro SD card. We are using a Portable SSD connected to the master node and exposed to the worker via NFS to store the volume data.
 
-![Architecture](/images/architecture.jpeg)
+![Architecture](/assets/architecture.jpeg)
 
 ## OS Configuration
 
