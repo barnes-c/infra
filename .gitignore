@@ -1,4 +1,12 @@
+### Misc
 .env
+
+### Minecraft
 whitelist.json
 ops.json
 
+
+### Website
+certs/
+certbot-logs/
+.well-know/
