@@ -1,44 +1,40 @@
 version: '3.8'
 services:
   mc:
-    build: .
-    env_file:
-      - ./.env
+    image: itzg/minecraft-server
     environment:
-      TYPE: PAPER
       ENABLE_AUTOPAUSE: "true"
-      # ENABLE_COMMAND_BLOCK: "true"
-      ENABLE_RCON: "true"
-      # ENABLE_WHITELIST: "false"
+      ENABLE_WHITELIST.json: "true"
       EULA: "true"
-      # HARDCORE: "false"
-      # ICON: 'https://github.com/barnes-c/infrastructure/blob/master/assets/server-icon.png'
+      ICON: 'https://github.com/barnes-c/infrastructure/blob/master/assets/server-icon.png'
       MAX_PLAYERS: 6
+      MAX_TICK_TIME: -1
       MEMORY: 6G
       MOTD: "Be Happy :)"
-      #OVERRIDE_WHITELIST: "true"
-      #PROXY: "false"
-
+      OPS_FILE: 'ops.json'
+      OVERRIDE_WHITELIST: "true"
+      RCON_CMDS_STARTUP:  |-
+        chunky radius 1000
+        chunky start
+        chunky continue
+      RCON_CMDS_FIRST_CONNECT: |-
+        chunky pause
+      RCON_CMDS_LAST_DISCONNECT: |-
+        chunky continue
       SEED: 4456208549549152808
-      SERVER_NAME: 'barnes.biz'
       SNOOPER_ENABLED: "false"
       SPAWN_PROTECTION: 0
+      TYPE: PAPER
       VIEW_DISTANCE: 20
-      #WHITELIST_FILE: './whitelist.json'
-      RCON_CMDS_STARTUP:  |-
-        /op mango_lover22
-        /chunky radius 1000
-        /chunky start
-        /chunky continue
-      RCON_CMDS_FIRST_CONNECT: |-
-        /chunky pause
-      RCON_CMDS_LAST_DISCONNECT: |-
-        /chunky continue
-
+      WHITELIST_FILE: '/whitelist.json'
     ports:
-      - "25565:25565"
+      - "25565:25565" # MC Server
+      - "8123:8123" # Dynmap
     volumes:
       - mc-paper:/data
+      - ./plugins:/plugins
+      - ./whitelist.json:/whitelist.json
+      - ./ops.json:/ops.json
     restart: unless-stopped
 
 volumes:

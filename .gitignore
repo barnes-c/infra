@@ -4,7 +4,8 @@
 ### Minecraft
 whitelist.json
 ops.json
-
+# s3 bucket in dynmap configuration
+# s3 bucket for minecraft server backup
 
 ### Website
 certs/
