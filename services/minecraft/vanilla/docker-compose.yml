@@ -9,7 +9,7 @@ services:
       ICON: 'https://github.com/barnes-c/infrastructure/blob/master/assets/server-icon.png'
       MAX_PLAYERS: 6
       MAX_TICK_TIME: -1
-      MEMORY: 6G
+      MEMORY: 3G
       MOTD: "Be Happy :)"
       OPS_FILE: 'ops.json'
       OVERRIDE_WHITELIST: "true"
