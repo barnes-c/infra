@@ -11,3 +11,10 @@ ops.json
 certs/
 certbot-logs/
 .well-know/
+
+# only temporary until i figured out how to fix
+cfg.txt
+
+
+*.crt
+*.key
