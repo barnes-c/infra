@@ -26,6 +26,10 @@ services:
       - "3000:3000"
     environment:
       - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./grafana/conf/custom.ini:/etc/grafana/conf/grafana.ini:ro
     networks:
       monitoring:
     depends_on:
@@ -93,3 +97,4 @@ networks:
 
 volumes:
   prometheus_data: {}
+  grafana_data: {}
