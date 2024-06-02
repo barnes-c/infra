@@ -1,3 +1,0 @@
-create sealed secret for user and password
-add mariadb/mysql database
-add redis server?
