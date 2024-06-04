@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+    ipv6nat:
+        image: robbertkl/ipv6nat
+        container_name: ipv6nat
+        labels:
+            - com.centurylinklabs.watchtower.scope=infrastructure
+        privileged: true
+        network_mode: host
+        restart: unless-stopped
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock:ro'
+            - '/lib/modules:/lib/modules:ro'
+
