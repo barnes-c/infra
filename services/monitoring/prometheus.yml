@@ -11,12 +11,17 @@ scrape_configs:
       - targets: ['prometheus:9090']
 
   - job_name: 'node-exporter'
-    scrape_interval: 15s
     static_configs:
       - targets: ['node-exporter:9100']
 
   - job_name: 'nginx-prometheus-exporter'
-    scrape_interval: 15s
     static_configs:
-      - targets: ['nginx-prometheus-exporter:9113']
+      - targets: ['nginx-prometheus-exporter:9113'] 
+  
+  - job_name: 'watchtower'
+    metrics_path: /v1/metrics
+    static_configs:
+      - targets: ['watchtower:8080']
+
+
    

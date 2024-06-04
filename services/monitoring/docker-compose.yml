@@ -4,6 +4,8 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
@@ -22,22 +24,31 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
-    ports:
-      - "3000:3000"
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     environment:
-      - GF_USERS_ALLOW_SIGN_UP=false
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: "https://monitoring.barnes.biz"
+      GF_SERVER_DOMAIN: "monitoring.barnes.biz"
+      VIRTUAL_HOST: monitoring.barnes.biz
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: monitoring.barnes.biz
+      LETSENCRYPT_EMAIL: christopher@barnes.biz
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
       - ./grafana/conf/custom.ini:/etc/grafana/conf/grafana.ini:ro
     networks:
       monitoring:
+      internet:
     depends_on:
       - prometheus
 
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     restart: unless-stopped
     volumes:
       - /proc:/host/proc:ro
@@ -58,9 +69,11 @@ services:
   nginx-prometheus-exporter:
     image: nginx/nginx-prometheus-exporter:latest
     container_name: prometheus-nginx-exporter
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     restart: always
     command:
-      - -nginx.scrape-uri=http://nginx:8080/stub_status
+      - -nginx.scrape-uri=http://nginx-proxy:8080/stub_status
     ports: 
       - "9113:9113"
     networks:
@@ -71,6 +84,8 @@ services:
   cadvisor: 
     image: gcr.io/cadvisor/cadvisor:latest 
     container_name: cadvisor 
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     ports: 
       - 8081:8080 
     networks: 
@@ -93,6 +108,8 @@ services:
 
 networks:
   monitoring:
+    name: monitoring
+  internet:
     external: true
 
 volumes:
