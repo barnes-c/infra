@@ -1,0 +1,63 @@
+version: '3.7'
+services:
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: nginxproxy/nginx-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./conf/uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf
+      - ./conf/headercustomconf.conf:/etc/nginx/conf.d/headercustomconf.conf
+    networks:
+      proxy-tier:
+      internet:
+    environment:
+      ENABLE_IPV6: 'True'
+      DEFAULT_HOST: "www.barnes.biz"
+
+  acme-companion:
+    container_name: nginx-proxy-acme
+    image: nginxproxy/acme-companion
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    restart: always
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=christopher@barnes.biz
+    networks:
+      - proxy-tier
+      - internet
+    depends_on:
+      - nginx-proxy
+
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:
+
+
+networks:
+  internet:
+    name: internet
+  proxy-tier:
+    name: proxy-tier
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+        - subnet: "fd00:dead:beef::/49"
