@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  nextcloud:
+    container_name: nextcloud
+    image: nextcloud
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=nextclouddb
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_USER_PASSWORD}
+      - MYSQL_HOST=mariadb
+      - NEXTCLOUD_ADMIN_USER=nextcloud_admin
+      - 'NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}'
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - 'REDIS_HOST_PASSWORD=nextcloud_redis_pass'
+    ports:
+      - '5080:80'
+    links:
+      - mariadb
+      - redis
+    depends_on:
+      - mariadb
+      - redis
+    volumes:
+      - '/media/ncconfigs/data:/var/www/html'
+      - '/media/ncdata/external_data1:/mnt/data_main1'
+      - '/media/ncdata/external_data2:/mnt/data_main2'
+    
+  mariadb:
+    container_name: nextcloud_db
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=nextclouddb
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_USER_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - '/media/ncconfigs/mariadb:/var/lib/mysql'
+    
+  redis:
+    container_name: nextcloud_redis
+    image: redis
+    restart: unless-stopped
+    command: redis-server --requirepass nextcloud_redis_pass

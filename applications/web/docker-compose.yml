@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx
+    container_name: website
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    # command: sh -c 'mkdir -p /usr/share/nginx/html/.well-known/acme-challenge && exec nginx -g "daemon off;"'
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - ./html:/var/www/html
+      - ./barnes.biz.conf:/etc/nginx/conf.d/default.conf
+      - ./snippets:/etc/nginx/snippets
+      - ./certs:/etc/nginx/certs
+    networks:
+      monitoring:
+        
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./certs:/etc/letsencrypt
+      - ./certbot-logs:/var/log/letsencrypt
+    command: certonly --force-renew --expand --webroot --webroot-path=/usr/share/nginx/html --email Christopher@Barnes.biz --agree-tos --no-eff-email -d barnes.biz -d www.barnes.biz -d map.barnes.biz -d monitoring.barnes.biz
+
+
+networks:
+  monitoring:
+    external: true
