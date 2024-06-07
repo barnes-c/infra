@@ -1,20 +1,18 @@
-### Misc
+### general
 .env
+*.crt
+*.key
 
 ### Minecraft
 whitelist.json
 ops.json
-# s3 bucket in dynmap configuration
 # s3 bucket for minecraft server backup
+# s3 bucket in dynmap configuration
 
-### Website
+### web
 certs/
 certbot-logs/
 .well-know/
 
-# only temporary until i figured out how to fix
-cfg.txt
 
-
-*.crt
-*.key
+vpn/config/

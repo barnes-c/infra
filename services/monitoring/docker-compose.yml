@@ -30,10 +30,12 @@ services:
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_SERVER_ROOT_URL: "https://monitoring.barnes.biz"
       GF_SERVER_DOMAIN: "monitoring.barnes.biz"
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
       VIRTUAL_HOST: monitoring.barnes.biz
       VIRTUAL_PORT: 3000
       LETSENCRYPT_HOST: monitoring.barnes.biz
-      LETSENCRYPT_EMAIL: christopher@barnes.biz
+      LETSENCRYPT_EMAIL: noreply@barnes.biz
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
@@ -73,7 +75,7 @@ services:
       - com.centurylinklabs.watchtower.scope=infrastructure
     restart: always
     command:
-      - -nginx.scrape-uri=http://nginx-proxy:8080/stub_status
+      - -nginx.scrape-uri=http://nginx-proxy:80/stub_status
     ports: 
       - "9113:9113"
     networks:
