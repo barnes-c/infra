@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   wireguard:
     image: linuxserver/wireguard
@@ -21,7 +20,7 @@ services:
       VIRTUAL_HOST: vpn.barnes.biz
       VIRTUAL_PORT: 51820
       LETSENCRYPT_HOST: vpn.barnes.biz
-      LETSENCRYPT_EMAIL: christopher@barnes.biz
+      LETSENCRYPT_EMAIL: noreply@barnes.biz
     volumes:
       - ./config:/config
       - /lib/modules:/lib/modules
@@ -36,3 +35,4 @@ services:
 networks:
   internet:
     external: true
+    
