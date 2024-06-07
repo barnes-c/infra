@@ -5,17 +5,24 @@ services:
     image: nextcloud
     restart: unless-stopped
     environment:
-      - MYSQL_DATABASE=nextclouddb
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_USER_PASSWORD}
-      - MYSQL_HOST=mariadb
-      - NEXTCLOUD_ADMIN_USER=nextcloud_admin
-      - 'NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}'
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - 'REDIS_HOST_PASSWORD=nextcloud_redis_pass'
+      MYSQL_DATABASE: nextclouddb
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_USER_PASSWORD}
+      MYSQL_HOST: mariadb
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: cloud.barnes.biz
+      TRUSTED_PROXIES: 172.20.0.2
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_HOST_PASSWORD: ${NEXTCLOUD_REDIS_PASSWORD}
+      VIRTUAL_HOST: cloud.barnes.biz
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: cloud.barnes.biz
+      LETSENCRYPT_EMAIL: noreply@barnes.biz
+      OVERWRITEPROTOCOL: https 
     ports:
-      - '5080:80'
+      - '5080:80'  
     links:
       - mariadb
       - redis
@@ -26,7 +33,11 @@ services:
       - '/media/ncconfigs/data:/var/www/html'
       - '/media/ncdata/external_data1:/mnt/data_main1'
       - '/media/ncdata/external_data2:/mnt/data_main2'
-    
+    networks:
+      - nextcloud
+      - internet
+
+
   mariadb:
     container_name: nextcloud_db
     image: mariadb
@@ -38,9 +49,20 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - '/media/ncconfigs/mariadb:/var/lib/mysql'
-    
+    networks:
+      - nextcloud
+
   redis:
     container_name: nextcloud_redis
     image: redis
     restart: unless-stopped
-    command: redis-server --requirepass nextcloud_redis_pass
+    command: redis-server --requirepass ${NEXTCLOUD_REDIS_PASSWORD}
+    networks:
+      - nextcloud
+
+networks:
+  nextcloud:
+    name: nextcloud
+    driver: bridge
+  internet:
+    external: true
