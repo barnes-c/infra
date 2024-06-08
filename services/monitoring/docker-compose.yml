@@ -16,6 +16,7 @@ services:
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--web.enable-lifecycle'
+      - '--log.level=debug'
     ports:
       - "9090:9090"
     networks:
@@ -100,7 +101,7 @@ services:
       - com.centurylinklabs.watchtower.scope=infrastructure
     restart: always
     command:
-      - -nginx.scrape-uri=http://nginx-proxy:80/stub_status
+      - '--nginx.scrape-uri=http://nginx-proxy/nginx_status'
     ports: 
       - "9113:9113"
     networks:

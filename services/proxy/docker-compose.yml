@@ -17,6 +17,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./conf/uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf
       - ./conf/headercustomconf.conf:/etc/nginx/conf.d/headercustomconf.conf
+      - ./conf/nginx-stubs.conf:/etc/nginx/conf.d/nginx-stubs.conf 
     networks:
       proxy-tier:
       internet:
@@ -52,7 +53,6 @@ volumes:
   html:
   acme:
 
-
 networks:
   monitoring:
     external: true
@@ -65,3 +65,4 @@ networks:
       config:
         - subnet: 172.20.0.0/16
         - subnet: "fd00:dead:beef::/49"
+        
