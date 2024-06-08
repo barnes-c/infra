@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus
     container_name: prometheus
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
@@ -23,7 +23,7 @@ services:
       - monitoring
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana
     container_name: grafana
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
@@ -48,8 +48,8 @@ services:
       - prometheus
 
   node-exporter:
-    image: prom/node-exporter:latest
-    container_name: node-exporter
+    image: prom/node-exporter
+    container_name: node-prometheus-exporter
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
     restart: unless-stopped
@@ -70,7 +70,7 @@ services:
       - prometheus 
 
   cadvisor: 
-    image: gcr.io/cadvisor/cadvisor:latest 
+    image: gcr.io/cadvisor/cadvisor 
     container_name: cadvisor 
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
@@ -87,15 +87,31 @@ services:
       - redis 
 
   redis: 
-    image: redis:latest 
-    container_name: redis 
+    image: redis 
+    container_name: prometheus-redis 
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     ports: 
       - 6379:6379 
     networks: 
       - monitoring
 
+  blackbox-prometheus-exporter:
+    image: prom/blackbox-exporter
+    container_name: blackbox-prometheus-exporter 
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    volumes:
+      - ./blackbox-config.yml:/etc/blackbox_exporter/config.yml
+    networks:
+      - monitoring
+      - internet
+    restart: unless-stopped
+    depends_on:
+      - prometheus 
+
   nginx-prometheus-exporter:
-    image: nginx/nginx-prometheus-exporter:latest
+    image: nginx/nginx-prometheus-exporter
     container_name: nginx-prometheus-exporter
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
