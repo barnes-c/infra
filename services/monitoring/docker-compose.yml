@@ -69,22 +69,29 @@ services:
     depends_on:
       - prometheus 
 
-  cadvisor: 
-    image: gcr.io/cadvisor/cadvisor 
-    container_name: cadvisor 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
-    ports: 
-      - 8081:8080 
-    networks: 
-      - monitoring 
-    volumes: 
-      - /:/rootfs:ro 
-      - /var/run:/var/run:rw 
-      - /sys:/sys:ro 
-      - /var/lib/docker/:/var/lib/docker:ro 
-    depends_on: 
-      - redis 
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:ro'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+      - '/dev/disk/:/dev/disk:ro'
+    command:
+      - '-docker_only=true'
+      - '--global_housekeeping_interval=1m0s'
+      - '--housekeeping_interval=15s'
+      - '-disable_metrics=udp,advtcp,sched,hugetlb,referenced_memory,tcp,process,cpu_topology,resctrl,memory_numa,diskIO'
+    devices:
+      - /dev/kmsg
+    expose:
+      - 8080
+    networks:
+      monitoring:
+    restart: unless-stopped
 
   redis: 
     image: redis 
