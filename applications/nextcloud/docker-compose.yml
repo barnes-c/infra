@@ -30,13 +30,15 @@ services:
       - mariadb
       - redis
     volumes:
-      - '/media/ncconfigs/data:/var/www/html'
-      - '/media/ncdata/external_data1:/mnt/data_main1'
-      - '/media/ncdata/external_data2:/mnt/data_main2'
+      - 'nextcloud_data:/var/www/html'
+      - 'nextcloud_data:/var/cache/fontconfig'
+      - 'nextcloud_data:/tmp'
+      - 'nextcloud_data:/mnt/data_main1'
+      - 'nextcloud_data:/mnt/data_main2'
+      - './nextcloud.conf:/etc/apache2/sites-available/000-default.conf'
     networks:
       - nextcloud
       - internet
-
 
   mariadb:
     container_name: nextcloud_db
@@ -48,7 +50,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_USER_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - '/media/ncconfigs/mariadb:/var/lib/mysql'
+      - '/mnt/ssd/media/ncconfigs/mariadb:/var/lib/mysql'
+      - '/mnt/ssd/media/ncconfigs/mariadb/tmp:/tmp'
     networks:
       - nextcloud
 
@@ -59,6 +62,10 @@ services:
     command: redis-server --requirepass ${NEXTCLOUD_REDIS_PASSWORD}
     networks:
       - nextcloud
+
+volumes:
+  nextcloud_data:
+    name: nextcloud_data
 
 networks:
   nextcloud:
