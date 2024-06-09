@@ -14,6 +14,7 @@ services:
       - certs:/etc/nginx/certs:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
+      - cache:/var/cache/nginx 
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./conf/uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf
       - ./conf/headercustomconf.conf:/etc/nginx/conf.d/headercustomconf.conf
@@ -52,6 +53,7 @@ volumes:
   vhost:
   html:
   acme:
+  cache:
 
 networks:
   monitoring:
