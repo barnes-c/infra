@@ -42,8 +42,8 @@ services:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
       - ./grafana/conf/custom.ini:/etc/grafana/conf/grafana.ini:ro
     networks:
-      monitoring:
-      internet:
+      - monitoring
+      - internet
     depends_on:
       - prometheus
 
@@ -67,7 +67,7 @@ services:
     networks:
       - monitoring
     depends_on:
-      - prometheus 
+      - prometheus
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -90,22 +90,22 @@ services:
     expose:
       - 8080
     networks:
-      monitoring:
+      - monitoring
     restart: unless-stopped
 
-  redis: 
-    image: redis 
-    container_name: prometheus-redis 
+  redis:
+    image: redis
+    container_name: prometheus-redis
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
-    ports: 
-      - 6379:6379 
-    networks: 
+    ports:
+      - 6379:6379
+    networks:
       - monitoring
 
   blackbox-prometheus-exporter:
     image: prom/blackbox-exporter
-    container_name: blackbox-prometheus-exporter 
+    container_name: blackbox-prometheus-exporter
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
     volumes:
@@ -115,7 +115,7 @@ services:
       - internet
     restart: unless-stopped
     depends_on:
-      - prometheus 
+      - prometheus
 
   nginx-prometheus-exporter:
     image: nginx/nginx-prometheus-exporter
@@ -125,12 +125,12 @@ services:
     restart: always
     command:
       - '--nginx.scrape-uri=http://nginx-proxy/nginx_status'
-    ports: 
+    ports:
       - "9113:9113"
     networks:
       - monitoring
     depends_on:
-      - prometheus  
+      - prometheus
 
   nextcloud-prometheus-exporter:
     image: xperimental/nextcloud-exporter
@@ -148,7 +148,7 @@ services:
       - monitoring
       - nextcloud
     depends_on:
-      - prometheus  
+      - prometheus
 
 networks:
   monitoring:
@@ -159,5 +159,7 @@ networks:
     external: true
 
 volumes:
-  prometheus_data: {}
-  grafana_data: {}
+  grafana_data:
+    name: grafana_data
+  prometheus_data:
+    name: prometheus_data
