@@ -48,6 +48,21 @@ services:
     depends_on:
       - nginx-proxy
 
+  nginx-prometheus-exporter:
+    image: nginx/nginx-prometheus-exporter
+    container_name: nginx-prometheus-exporter
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    restart: always
+    command:
+      - '--nginx.scrape-uri=http://nginx-proxy/nginx_status'
+    ports:
+      - "9113:9113"
+    networks:
+      - monitoring
+    depends_on:
+      - nginx-proxy
+
 volumes:
   certs:
   vhost:

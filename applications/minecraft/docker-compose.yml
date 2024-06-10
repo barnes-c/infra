@@ -1,19 +1,20 @@
 version: '3.8'
 services:
-  mc:
-    image: itzg/minecraft-server:java21
+  minecraft:
+    image: itzg/minecraft-server:java21-graalvm
+    container_name: minecraft
     environment:
-      ENABLE_AUTOPAUSE: "false"
-      ENABLE_WHITELIST.json: "true"
+      TYPE: PAPER
+      PAPERBUILD: 138
       EULA: "true"
-      ICON: 'https://github.com/barnes-c/infrastructure/blob/master/assets/server-icon.png'
+      MEMORY: 3G
       MAX_PLAYERS: 6
       MAX_TICK_TIME: -1
-      MEMORY: 3G
-      MOTD: "Be Happy :)"
-      OPS_FILE: 'ops.json'
-      OVERRIDE_WHITELIST: "true"
-      PAPERBUILD: 82
+      SNOOPER_ENABLED: "false"
+      VIEW_DISTANCE: 20
+      ENABLE_RCON: "true"
+      RCON_PORT: 25575
+      RCON_PASSWORD: ${RCON_PASSWORD}
       RCON_CMDS_STARTUP:  |-
         chunky radius 1000
         chunky start
@@ -22,21 +23,39 @@ services:
         chunky pause
       RCON_CMDS_LAST_DISCONNECT: |-
         chunky continue
-      SEED: 4456208549549152808
-      SNOOPER_ENABLED: "false"
-      SPAWN_PROTECTION: 0
-      TYPE: PAPER
-      VIEW_DISTANCE: 20
-      WHITELIST_FILE: '/whitelist.json'
     ports:
-      - "25565:25565" # MC Server
-      - "8123:8123" # Dynmap
+      - "25565:25565" 
+      - "8123:8123"
+      - "25575:25575"
     volumes:
-      - mc-paper:/data
+      - minecraft_data:/data
       - ./plugins:/plugins
-      - ./whitelist.json:/whitelist.json
-      - ./ops.json:/ops.json
     restart: unless-stopped
+    networks:
+      - minecraft
+
+  minecraft-prometheus-exporter:
+    image: ghcr.io/dirien/minecraft-exporter
+    container_name: minecraft-prometheus-exporter
+    environment:
+      MC_RCON_HOST: minecraft
+      MC_RCON_PORT: 25575
+      MC_RCON_PASSWORD: ${RCON_PASSWORD}
+    command: 
+    - '--log.level=info'
+    ports:
+      - "9150:9150"
+    networks:
+      - minecraft
+    depends_on:
+      - minecraft
+    
 
 volumes:
-  mc-paper: {}
+  minecraft_data:
+    name: minecraft_data
+
+networks:
+  minecraft:
+    name: minecraft
+    driver: bridge

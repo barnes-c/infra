@@ -63,6 +63,24 @@ services:
     networks:
       - nextcloud
 
+  nextcloud-prometheus-exporter:
+    image: xperimental/nextcloud-exporter
+    container_name: nextcloud-prometheus-exporter
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    restart: always
+    environment:
+      NEXTCLOUD_SERVER: "https://cloud.barnes.biz"
+      NEXTCLOUD_USERNAME: ${NEXTCLOUD_ADMIN_USER}
+      NEXTCLOUD_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+      NEXTCLOUD_TIMEOUT: 30s
+      NEXTCLOUD_INFO_APPS: "true"
+    networks:
+      - monitoring
+      - nextcloud
+    depends_on:
+      - nextcloud
+
 volumes:
   nextcloud_data:
     name: nextcloud_data
@@ -72,4 +90,6 @@ networks:
     name: nextcloud
     driver: bridge
   internet:
+    external: true
+  monitoring:
     external: true
