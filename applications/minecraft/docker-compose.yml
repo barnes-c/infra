@@ -7,7 +7,8 @@ services:
       TYPE: PAPER
       PAPERBUILD: 138
       EULA: "true"
-      MEMORY: 3G
+      INIT_MEMORY: 512M
+      MAX_MEMORY: 3G
       MAX_PLAYERS: 6
       MAX_TICK_TIME: -1
       SNOOPER_ENABLED: "false"
@@ -24,38 +25,23 @@ services:
       RCON_CMDS_LAST_DISCONNECT: |-
         chunky continue
     ports:
-      - "25565:25565" 
-      - "8123:8123"
-      - "25575:25575"
+      - "25565:25565" # Server
+      - "25575:25575" # RCON
     volumes:
       - minecraft_data:/data
       - ./plugins:/plugins
     restart: unless-stopped
     networks:
-      - minecraft
-
-  minecraft-prometheus-exporter:
-    image: ghcr.io/dirien/minecraft-exporter
-    container_name: minecraft-prometheus-exporter
-    environment:
-      MC_RCON_HOST: minecraft
-      MC_RCON_PORT: 25575
-      MC_RCON_PASSWORD: ${RCON_PASSWORD}
-    command: 
-    - '--log.level=info'
-    ports:
-      - "9150:9150"
-    networks:
-      - minecraft
-    depends_on:
-      - minecraft
-    
+      monitoring:
+      minecraft:
 
 volumes:
   minecraft_data:
     name: minecraft_data
 
 networks:
+  monitoring:
+    external: true
   minecraft:
     name: minecraft
     driver: bridge

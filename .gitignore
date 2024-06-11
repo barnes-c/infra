@@ -1,18 +1,1 @@
-### general
 .env
-*.crt
-*.key
-
-### Minecraft
-whitelist.json
-ops.json
-# s3 bucket for minecraft server backup
-# s3 bucket in dynmap configuration
-
-### web
-certs/
-certbot-logs/
-.well-know/
-
-
-vpn/config/
