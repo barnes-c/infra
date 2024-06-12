@@ -10,3 +10,9 @@ modules:
       fail_if_ssl: false
       fail_if_not_ssl: true
       preferred_ip_protocol: ip4
+
+  custom_tcp:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      ip_protocol_fallback: true

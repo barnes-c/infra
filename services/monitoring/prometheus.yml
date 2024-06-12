@@ -19,12 +19,28 @@ scrape_configs:
   - job_name: 'blackbox-prometheus-exporter'
     metrics_path: /probe
     params:
-      module: [custom_https]  
+      module: [custom_https]
     scrape_interval: 30s
     static_configs:
       - targets:
-        - https://monitoring.barnes.biz
-        - https://cloud.barnes.biz
+          - https://monitoring.barnes.biz
+          - https://cloud.barnes.biz
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: "blackbox-prometheus-exporter:9115"
+
+  - job_name: 'blackbox-tcp-exporter'
+    metrics_path: /probe
+    params:
+      module: [custom_tcp]
+    scrape_interval: 30s
+    static_configs:
+      - targets:
+          - mc.barnes.biz:25565
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
