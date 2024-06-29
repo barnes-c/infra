@@ -20,7 +20,6 @@ scrape_configs:
     metrics_path: /probe
     params:
       module: [custom_https]
-    scrape_interval: 30s
     static_configs:
       - targets:
           - https://monitoring.barnes.biz
@@ -37,7 +36,6 @@ scrape_configs:
     metrics_path: /probe
     params:
       module: [custom_tcp]
-    scrape_interval: 30s
     static_configs:
       - targets:
           - mc.barnes.biz:25565

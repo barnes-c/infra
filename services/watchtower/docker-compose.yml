@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_DEBUG: "true"
+      WATCHTOWER_SCOPE: infrastructure
+      WATCHTOWER_POLL_INTERVAL: 86400 # 24h
+      WATCHTOWER_HTTP_API_METRICS: "true"
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_HTTP_API_TOKEN: ${WATCHTOWER_HTTP_API_TOKEN}
+      WATCHTOWER_NOTIFICATIONS: email
+      WATCHTOWER_NOTIFICATIONS_HOSTNAME: infrastructure@barnes.biz
+      WATCHTOWER_NOTIFICATION_EMAIL_FROM: ${WATCHTOWER_NOTIFICATION_EMAIL_FROM}
+      WATCHTOWER_NOTIFICATION_EMAIL_TO: ${WATCHTOWER_NOTIFICATION_EMAIL_TO}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: ${WATCHTOWER_NOTIFICATION_EMAIL_SERVER}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: ${WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: ${WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: ${WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD}
+      WATCHTOWER_NOTIFICATION_EMAIL_DELAY: 2
+    networks:
+      monitoring:
+
+
+networks:
+  monitoring:
+    external: true
+  
+
