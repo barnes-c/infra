@@ -48,6 +48,7 @@ scrape_configs:
         replacement: "blackbox-prometheus-exporter:9115"
 
   - job_name: 'watchtower'
+    bearer_token: pg343pgqdn-fmwpecqqg34gdsdehj6-utnfgvwdcqwe
     metrics_path: /v1/metrics
     static_configs:
       - targets: ['watchtower:8080']
