@@ -4,6 +4,8 @@ services:
     container_name: nextcloud
     build: .
     restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     environment:
       MYSQL_DATABASE: nextclouddb
       MYSQL_USER: ${MYSQL_USER}
@@ -44,6 +46,8 @@ services:
     container_name: nextcloud_db
     image: mariadb
     restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     environment:
       - MYSQL_DATABASE=nextclouddb
       - MYSQL_USER=${MYSQL_USER}
@@ -59,6 +63,8 @@ services:
     container_name: nextcloud_redis
     image: redis
     restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.scope=infrastructure
     command: redis-server --requirepass ${NEXTCLOUD_REDIS_PASSWORD}
     networks:
       - nextcloud

@@ -70,7 +70,7 @@ services:
       - prometheus
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor
     container_name: cadvisor
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
