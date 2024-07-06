@@ -1,8 +1,9 @@
 version: '3.8'
+
 services:
   nextcloud:
     container_name: nextcloud
-    build: .
+    image: nextcloud
     restart: unless-stopped
     labels:
       - com.centurylinklabs.watchtower.scope=infrastructure
