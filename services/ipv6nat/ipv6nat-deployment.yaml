@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    com.centurylinklabs.watchtower.scope: infrastructure
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: ipv6nat
+  name: ipv6nat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ipv6nat
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        com.centurylinklabs.watchtower.scope: infrastructure
+        kompose.cmd: kompose convert
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: ipv6nat
+    spec:
+      containers:
+        - image: robbertkl/ipv6nat
+          name: ipv6nat
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /lib/modules
+              name: ipv6nat-claim1
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: ipv6nat-claim1
+          persistentVolumeClaim:
+            claimName: ipv6nat-claim1
+            readOnly: true
