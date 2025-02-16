@@ -1,4 +1,4 @@
-# Raspberry Pi - Master/Worker Setup
+# Raspberry Pi - Master/Worker Setup DEPRECATED
 
 Fist of all, we need to install and configure **Raspbian Linux Operating System** on each node of the future Kubernetes cluster. Our goal is it to build an architecture that looks something like this.
 
