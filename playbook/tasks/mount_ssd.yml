@@ -1,0 +1,16 @@
+---
+- name: Ensure SSD mount point exists
+  file:
+    path: /mnt/ssd
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Mount SSD and add to /etc/fstab
+  mount:
+    src: /dev/sda
+    path: /mnt/ssd
+    fstype: ext4
+    opts: defaults
+    state: mounted

@@ -1,0 +1,7 @@
+---
+- name: Configure homelab server
+  hosts: homelab
+  become: yes
+  tasks:
+    - import_tasks: tasks/mount_ssd.yml
+    - import_tasks: tasks/install_k3s.yml
