@@ -1,0 +1,41 @@
+- name: Create the argocd namespace (ignore if it already exists)
+  shell: kubectl create namespace argocd
+  args:
+    warn: false
+  delegate_to: localhost
+  register: create_namespace
+  failed_when: create_namespace.rc not in [0, 1]
+
+- name: Apply ArgoCD installation manifest
+  shell: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  args:
+    warn: false
+  delegate_to: localhost
+  register: argo_apply
+
+- name: Patch argocd-server service to LoadBalancer
+  command: >
+    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+  args:
+    warn: false
+  delegate_to: localhost
+  register: patch_service
+
+- name: Download ArgoCD CLI binary
+  get_url:
+    url: "https://github.com/argoproj/argo-cd/releases/download/v2.14.2/argocd-linux-arm64"
+    dest: /tmp/argocd-linux-arm64
+    mode: "0755"
+  delegate_to: localhost
+  register: download_cli
+
+- name: Install ArgoCD CLI binary
+  command: install -m 555 /tmp/argocd-linux-arm64 /usr/local/bin/argocd
+  when: download_cli.changed
+  delegate_to: localhost
+
+- name: Remove downloaded ArgoCD CLI binary
+  file:
+    path: /tmp/argocd-linux-arm64
+    state: absent
+  delegate_to: localhost

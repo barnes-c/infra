@@ -1,0 +1,63 @@
+- name: Configure SSH for public key authentication only
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Ensure OpenSSH server is installed
+      package:
+        name: openssh-server
+        state: present
+
+    - name: Set SSH public key authentication and disable password authentication
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^{{ item.key }} "
+        line: "{{ item.key }} {{ item.value }}"
+        state: present
+        backup: true
+      loop:
+        - { key: "PubkeyAuthentication", value: "yes" }
+        - { key: "PasswordAuthentication", value: "no" }
+        - { key: "KbdInteractiveAuthentication", value: "no" }
+        - { key: "ChallengeResponseAuthentication", value: "no" }
+        - { key: "PermitEmptyPasswords", value: "no" }
+        - { key: "UsePAM", value: "no" }
+
+    - name: Check for SSH override configs in /etc/ssh/sshd_config.d/
+      find:
+        paths: /etc/ssh/sshd_config.d/
+        patterns: "*.conf"
+      register: ssh_overrides
+
+    - name: Ensure no override configs enable password authentication
+      replace:
+        path: "{{ item.path }}"
+        regexp: "^(?i)(PasswordAuthentication|KbdInteractiveAuthentication)\\s+yes"
+        replace: "\\1 no"
+      with_items: "{{ ssh_overrides.files }}"
+      when: ssh_overrides.matched > 0
+
+    - name: Restart SSH service
+      systemd:
+        name: ssh
+        state: restarted
+        daemon_reload: true
+        enabled: true
+      ignore_errors: true
+
+    - name: Restart SSH socket (if required)
+      systemd:
+        name: ssh.socket
+        state: restarted
+        daemon_reload: true
+      when: ssh_overrides.matched > 0
+      ignore_errors: true
+
+    - name: Verify SSH settings
+      command: "sshd -T"
+      register: ssh_config_check
+      changed_when: false
+
+    - name: Show SSH configuration results
+      debug:
+        msg: "{{ ssh_config_check.stdout_lines | select('search', 'authentication') | list }}"
