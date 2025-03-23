@@ -33,13 +33,22 @@ services:
       GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
       GF_SERVER_DOMAIN: "monitoring.barnes.biz"
       GF_SERVER_ROOT_URL: "https://monitoring.barnes.biz"
+      GF_PROVISIONING_EXPAND_ENV_VARS: "true"
       GF_USERS_ALLOW_SIGN_UP: "false"
+      STRAVA_CLIENT_ID: ${STRAVA_CLIENT_ID}
+      STRAVA_CLIENT_SECRET: ${STRAVA_CLIENT_SECRET}
+      STRAVA_REFRESH_TOKEN: ${STRAVA_REFRESH_TOKEN}
+      LETSENCRYPT_EMAIL: noreply@barnes.biz
+      LETSENCRYPT_HOST: monitoring.barnes.biz
+      VIRTUAL_HOST: monitoring.barnes.biz
+      VIRTUAL_PORT: 3000
     ports:
       - "3000:3000"
     volumes:
       - ./1-refreshToken:/var/lib/grafana/strava-datasource/refreshToken:ro
       - ./grafana/conf/grafana.ini:/etc/grafana/conf/grafana.ini:ro
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+      - ./grafana/provisioning/plugins:/usr/share/grafana/plugins-bundled:ro
       - grafana_data:/var/lib/grafana
     networks:
       - monitoring
