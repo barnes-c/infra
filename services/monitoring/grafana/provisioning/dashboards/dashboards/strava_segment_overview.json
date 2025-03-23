@@ -1,41 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_GRAFANA-STRAVA-DATASOURCE",
-      "label": "grafana-strava-datasource",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "grafana-strava-datasource",
-      "pluginName": "Strava"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "geomap",
-      "name": "Geomap",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.5.2"
-    },
-    {
-      "type": "datasource",
-      "id": "grafana-strava-datasource",
-      "name": "Strava",
-      "version": "1.7.1"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -61,13 +24,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": null,
+  "id": 29,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+        "uid": "STRAVA"
       },
       "fieldConfig": {
         "defaults": {
@@ -210,9 +173,9 @@
         "view": {
           "allLayers": true,
           "id": "coords",
-          "lat": 46.242878,
-          "lon": 6.148332,
-          "zoom": 9.62
+          "lat": 46.229635,
+          "lon": 6.164965,
+          "zoom": 10.74
         }
       },
       "pluginVersion": "11.5.2",
@@ -224,7 +187,7 @@
           "activityStat": "distance",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+            "uid": "STRAVA"
           },
           "extendedStats": [],
           "fitToTimeRange": false,
@@ -247,7 +210,7 @@
           "activityStat": "distance",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+            "uid": "STRAVA"
           },
           "extendedStats": [],
           "fitToTimeRange": false,
@@ -279,7 +242,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+        "uid": "STRAVA"
       },
       "fieldConfig": {
         "defaults": {
@@ -375,9 +338,9 @@
         "view": {
           "allLayers": true,
           "id": "coords",
-          "lat": 46.242878,
-          "lon": 6.148332,
-          "zoom": 9.62
+          "lat": 46.234464,
+          "lon": 6.080554,
+          "zoom": 10.39
         }
       },
       "pluginVersion": "11.5.2",
@@ -389,7 +352,7 @@
           "activityStat": "distance",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+            "uid": "STRAVA"
           },
           "extendedStats": [],
           "fitToTimeRange": false,
@@ -420,7 +383,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+        "uid": "STRAVA"
       },
       "fieldConfig": {
         "defaults": {
@@ -548,7 +511,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+            "uid": "STRAVA"
           },
           "extendedStats": [],
           "fitToTimeRange": false,
@@ -580,7 +543,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+            "uid": "STRAVA"
           },
           "extendedStats": [],
           "fitToTimeRange": false,
@@ -612,7 +575,7 @@
     {
       "datasource": {
         "type": "grafana-strava-datasource",
-        "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+        "uid": "STRAVA"
       },
       "fieldConfig": {
         "defaults": {
@@ -700,7 +663,7 @@
           "activityType": "Run",
           "datasource": {
             "type": "grafana-strava-datasource",
-            "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+            "uid": "STRAVA"
           },
           "extendedStats": [],
           "fitToTimeRange": false,
@@ -729,16 +692,20 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "",
   "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "text": "Night Run",
+          "value": "13883510399"
+        },
         "datasource": {
           "type": "grafana-strava-datasource",
-          "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+          "uid": "STRAVA"
         },
         "definition": "Strava - activity",
         "includeAll": false,
@@ -755,10 +722,13 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "text": "",
+          "value": ""
+        },
         "datasource": {
           "type": "grafana-strava-datasource",
-          "uid": "${DS_GRAFANA-STRAVA-DATASOURCE}"
+          "uid": "STRAVA"
         },
         "definition": "Strava - segment_effort",
         "includeAll": false,
@@ -776,8 +746,8 @@
     ]
   },
   "time": {
-    "from": "2025-03-08T15:05:57.000Z",
-    "to": "2025-03-08T15:08:44.000Z"
+    "from": "2022-08-23T15:52:21.000Z",
+    "to": "2022-08-23T15:56:58.000Z"
   },
   "timepicker": {},
   "timezone": "",

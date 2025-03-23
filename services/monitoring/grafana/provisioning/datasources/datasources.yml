@@ -4,9 +4,13 @@ apiVersion: 1
 deleteDatasources:
   - name: PROMETHEUS
     orgId: 1
+  - name: STRAVA
+    orgId: 1
+
 
 datasources:
-  - name: prometheus
+  - name: PROMETHEUS
+    uid: PROMETHEUS
     type: prometheus
     access: proxy
     url: http://prometheus:9090
@@ -27,3 +31,14 @@ datasources:
       tlsClientKey: ""
     version: 1
     editable: true
+
+  - name: STRAVA
+    uid: STRAVA
+    type: grafana-strava-datasource
+    editable: true
+    configuration:
+      clientId: "${STRAVA_CLIENT_ID}"
+      clientSecret: "${STRAVA_CLIENT_SECRET}"
+      refreshToken: "${STRAVA_REFRESH_TOKEN}"
+
+prune: true
