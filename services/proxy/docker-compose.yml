@@ -35,16 +35,16 @@ services:
       - com.centurylinklabs.watchtower.scope=infrastructure
     restart: always
     volumes:
-      - certs:/etc/nginx/certs
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
     environment:
       - DEFAULT_EMAIL=noreply@barnes.biz
     networks:
-      - proxy-tier
       - internet
+      - proxy-tier
     depends_on:
       - nginx-proxy
 
@@ -64,17 +64,17 @@ services:
       - nginx-proxy
 
 volumes:
-  certs:
-  vhost:
-  html:
   acme:
   cache:
+  certs:
+  html:
+  vhost:
 
 networks:
-  monitoring:
-    external: true
   internet:
     name: internet
+  monitoring:
+    name: monitoring
   proxy-tier:
     name: proxy-tier
     driver: bridge
