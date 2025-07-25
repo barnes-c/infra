@@ -1,0 +1,75 @@
+global:
+  domain: argocd.barnes.biz
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    hosts:
+      - argocd.barnes.biz
+    tls:
+      - secretName: argocd-tls
+        hosts:
+          - argocd.barnes.biz
+
+  service:
+    type: ClusterIP
+
+  extraArgs:
+    - --insecure
+
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+configs:
+  cm:
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    timeout.reconciliation: 180s
+
+  rbac:
+    policy.default: role:readonly
+    policy.csv: |
+      g, system:authenticated, role:admin
+
+  secret:
+    createSecret: true
+
+controller:
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+repoServer:
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+applicationSet:
+  enabled: true
+
+dex:
+  enabled: true
+
+redis:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      memory: 128Mi
