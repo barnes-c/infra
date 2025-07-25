@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: minio
+    targetRevision: 17.0.16
+    helm:
+      values: |
+        mode: standalone
+        persistence:
+          enabled: true
+          storageClass: longhorn
+          size: 10Gi
+        auth:
+          rootUser: minioadmin
+          rootPassword: minioadmin123
+        ingress:
+          enabled: true
+          hostname: s3.barnes.biz
+          ingressClassName: traefik
+          tls: true
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: minio
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
