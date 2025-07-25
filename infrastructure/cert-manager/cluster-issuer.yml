@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: robot@barnes.biz  # <-- update this
+    email: robot@barnes.biz
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
