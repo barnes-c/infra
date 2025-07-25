@@ -1,6 +1,6 @@
 ---
 global:
-  domain: argocd.barnes.biz
+  domain: argo.barnes.biz
 
 server:
   ingress:
@@ -11,11 +11,11 @@ server:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.tls: "true"
     hosts:
-      - argocd.barnes.biz
+      - argo.barnes.biz
     tls:
       - secretName: argocd-tls
         hosts:
-          - argocd.barnes.biz
+          - argo.barnes.biz
 
   service:
     type: ClusterIP
@@ -33,7 +33,7 @@ server:
 
 configs:
   cm:
-    application.instanceLabelKey: argocd.argoproj.io/instance
+    application.instanceLabelKey: argo.argoproj.io/instance
     timeout.reconciliation: 180s
 
   rbac:
