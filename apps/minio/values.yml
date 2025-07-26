@@ -20,11 +20,12 @@ provisioning:
     - name: default
       policy: none
   networkPolicy:
-    enabled: true
-    ingress:
-      from:
-        - podSelector:
-            matchLabels:
-              app.kubernetes.io/name: minio
+    enabled: false
+    # enabled: true
+    # ingress:
+    #   from:
+    #     - podSelector:
+    #         matchLabels:
+    #           app.kubernetes.io/name: minio
   cleanupAfterFinished:
     enabled: false
