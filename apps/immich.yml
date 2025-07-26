@@ -7,9 +7,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/barnes-c/cluster
-    targetRevision: master
-    path: apps/immich
+    repoURL: https://immich-app.github.io/immich-charts
+    chart: immich
+    targetRevision: 0.9.3
+    helm:
+      valueFiles:
+        - apps/immich/values.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: immich
