@@ -609,14 +609,7 @@ service:
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ##
 ingress:
-  enabled: true
-  ingressClassName: traefik
-  hostname: api.s3.barnes.biz
-  tls: true
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-  path: /
-  pathType: Prefix
+  enabled: false
 
 console:
   ingress:
