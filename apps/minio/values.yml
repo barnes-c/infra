@@ -33,3 +33,13 @@ console:
     digest: ""
     pullPolicy: IfNotPresent
   imagePullSecrets: []
+
+defaultInitContainers:
+  volumePermissions:
+    image:
+      registry: docker.io
+      repository: bitnami/minio
+      tag: 2023.12.23-debian-11-r0
+      digest: ""
+      pullPolicy: IfNotPresent
+    resources: {}
