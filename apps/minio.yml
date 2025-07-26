@@ -10,7 +10,6 @@ spec:
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: master
     path: apps/minio
-    chart: minio
     helm:
       valueFiles:
         - values.yaml
