@@ -1,0 +1,16 @@
+mode: standalone
+persistence:
+  enabled: true
+  storageClass: longhorn
+  size: 10Gi
+auth:
+  rootUser: minioadmin
+  rootPassword: minioadmin123
+ingress:
+  enabled: true
+  hostname: s3.barnes.biz
+  ingressClassName: traefik
+  tls: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
