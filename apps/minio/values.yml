@@ -19,3 +19,5 @@ provisioning:
   buckets:
     - name: default
       policy: none
+  networkPolicy:
+    enabled: false
