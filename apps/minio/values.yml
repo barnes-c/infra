@@ -1,12 +1,15 @@
 ---
 mode: standalone
+
+auth:
+  rootUser: minioadmin
+  rootPassword: minioadmin123
+
 persistence:
   enabled: true
   storageClass: longhorn
   size: 10Gi
-auth:
-  rootUser: minioadmin
-  rootPassword: minioadmin123
+
 ingress:
   enabled: true
   hostname: s3.barnes.biz
@@ -20,26 +23,3 @@ provisioning:
   buckets:
     - name: default
       policy: none
-  networkPolicy:
-    enabled: false
-  cleanupAfterFinished:
-    enabled: false
-
-console:
-  image:
-    registry: docker.io
-    repository: bitnami/minio
-    tag: 2023.12.23-debian-11-r0
-    digest: ""
-    pullPolicy: IfNotPresent
-  imagePullSecrets: []
-
-defaultInitContainers:
-  volumePermissions:
-    image:
-      registry: docker.io
-      repository: bitnami/minio
-      tag: 2023.12.23-debian-11-r0
-      digest: ""
-      pullPolicy: IfNotPresent
-    resources: {}

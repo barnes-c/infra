@@ -12,7 +12,8 @@ spec:
     path: apps/minio
     helm:
       valueFiles:
-        - values.yml
+        - values.yml 
+        - defaults.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: minio
