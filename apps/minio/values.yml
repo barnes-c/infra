@@ -14,4 +14,8 @@ ingress:
   tls: true
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-
+provisioning:
+  enabled: true
+  buckets:
+    - name: default
+      policy: none
