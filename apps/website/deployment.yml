@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,12 +14,12 @@ spec:
         app: website
     spec:
       containers:
-        - name: website
-          image: staticredirect/nginx-redirect
-          env:
-            - name: REDIRECT_URL
-              value: "https://github.com/barnes-c"
-            - name: REDIRECT_CODE
-              value: "301"
-          ports:
-            - containerPort: 80
+        - name: nginx
+          image: nginx:stable-alpine
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: website-redirect
