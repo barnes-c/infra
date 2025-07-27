@@ -1,12 +1,13 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: website-redirect
-  namespace: default
+  namespace: website
 data:
   redirect.conf: |
     server {
         listen 80;
         server_name _;
-        return 301 https://github.com/barnes-c$request_uri;
+        return 301 https://github.com/barnes-c;
     }

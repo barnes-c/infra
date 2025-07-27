@@ -1,8 +1,9 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: website
-  namespace: default
+  namespace: website
 spec:
   replicas: 1
   selector:

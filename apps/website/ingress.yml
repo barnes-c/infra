@@ -1,17 +1,25 @@
 ---
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: website
   namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`barnes.biz`)
-      kind: Rule
-      services:
-        - name: website
-          port: 80
   tls:
-    certResolver: letsencrypt
+    - hosts:
+        - barnes.biz
+      secretName: website-tls
+  rules:
+    - host: barnes.biz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: website
+                port:
+                  number: 80
