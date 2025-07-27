@@ -98,7 +98,7 @@ service:
   loadBalancerClass: ""
 # -- Name of a secret with a wireguard private key on key privatekey, if not provided on first install a hook generates one.
 secretName: ~
-replicaCount: 3
+replicaCount: 1
 resources:
   requests:
     memory: 256Mi
@@ -180,7 +180,7 @@ tolerations: []
 ## Metrics configuration
 metrics:
   # -- Enable exposing Wireguard metrics
-  enabled: true
+  enabled: false
   # -- Wireguard Exporter image
   image:
     repository: docker.io/mindflavor/prometheus-wireguard-exporter
