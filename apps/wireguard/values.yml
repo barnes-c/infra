@@ -12,6 +12,10 @@ settings:
           name: wireguard-keys
           key: publickey
         ALLOWED_IPS: "10.13.13.2/32"
+
+  INIT_IMAGE: ghcr.io/angelnu/wireguard
+  SIDECAR_IMAGE: ghcr.io/angelnu/wireguard
+
 image:
   repository: ghcr.io/angelnu/wireguard
   tag: latest
