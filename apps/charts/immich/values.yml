@@ -16,6 +16,8 @@ env:
 image:
   tag: v1.119.0
 
+useDeprecatedPostgresChart: true
+
 immich:
   metrics:
     enabled: false
