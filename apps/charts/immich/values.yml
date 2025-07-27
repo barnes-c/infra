@@ -93,6 +93,9 @@ server:
         - hosts:
             - img.barnes.biz
           secretName: img.barnes.biz-tls
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
 
 machine-learning:
   enabled: false
