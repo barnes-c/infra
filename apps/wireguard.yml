@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,14 +8,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/barnes-c/cluster
-    targetRevision: HEAD
+    targetRevision: master
     path: apps/wireguard
     helm:
-      chart: wireguard-chart
-      repoURL: https://bryopsida.github.io/wireguard-chart
-      version: 0.30.0
       valueFiles:
-        - values.yml
+        - values.yml 
   destination:
     server: https://kubernetes.default.svc
     namespace: wireguard
@@ -22,5 +20,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
