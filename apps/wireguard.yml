@@ -1,4 +1,3 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,15 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/barnes-c/cluster
-    targetRevision: HEAD
-    path: apps/wireguard
+    repoURL: https://angelnu.github.io/helm-charts
+    chart: pod-gateway
+    targetRevision: 6.5.1
     helm:
-      chart: pod-gateway
-      repoURL: https://angelnu.github.io/helm-charts
-      version: 6.5.1
       valueFiles:
-        - values.yml
+        - https://raw.githubusercontent.com/barnes-c/cluster/master/apps/wireguard/values.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: wireguard
