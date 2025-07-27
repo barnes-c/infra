@@ -1,43 +1,25 @@
-image:
-  repository: linuxserver/wireguard
-  tag: latest
+settings:
+  VPN:
+    WIREGUARD_ENABLED: true
 
-hostNetwork: true
-dnsPolicy: ClusterFirstWithHostNet
-
-env:
-  PUID: 1000
-  PGID: 1000
-  TZ: Europe/Zurich
-
-config:
-  server:
-    privateKeySecretRef:
+  WIREGUARD:
+    ADDRESS: 10.13.13.1/24
+    PRIVATE_KEY_SECRET:
       name: wireguard-keys
       key: privatekey
-    address: "10.13.13.1"
-    listenPort: 51820
-    dns: 185.222.222.222
-
-  peers:
-    - name: laptop
-      publicKeySecretRef:
-        name: wireguard-keys
-        key: publickey
-      allowedIPs: "10.13.13.2/32"
-
-persistence:
-  config:
-    enabled: true
-    storageClass: longhorn
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    mountPath: /config
+    PEERS:
+      - PUBLIC_KEY_SECRET:
+          name: wireguard-keys
+          key: publickey
+        ALLOWED_IPS: "10.13.13.2/32"
+image:
+  repository: ghcr.io/angelnu/wireguard
+  tag: latest
 
 resources:
-  requests:
-    memory: 128Mi
-    cpu: 100m
   limits:
     memory: 512Mi
     cpu: 500m
+  requests:
+    memory: 128Mi
+    cpu: 100m
