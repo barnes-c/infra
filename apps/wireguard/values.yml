@@ -84,16 +84,10 @@ securityContext:
   allowPrivilegeEscalation: true
   privileged: false
 service:
-  # -- Whether the service will be created or not
   enabled: true
-  # -- Service type, to keep internal to cluster use ClusterIP or NodePort
   type: LoadBalancer
-  # -- Service port, default is 51820 UDP
   port: 51820
-  # -- Node port, only valid with service type: NodePort
-  nodePort: 31820
-  # -- External Traffic Policy for the service
-  externalTrafficPolicy: ""
+  externalTrafficPolicy: Local
   # -- IP to assign to the LoadBalancer service
   loadBalancerIP: ""
   # -- Annotations
@@ -186,7 +180,7 @@ tolerations: []
 ## Metrics configuration
 metrics:
   # -- Enable exposing Wireguard metrics
-  enabled: false
+  enabled: true
   # -- Wireguard Exporter image
   image:
     repository: docker.io/mindflavor/prometheus-wireguard-exporter
