@@ -1,4 +1,6 @@
 ---
+namespace: website
+
 resources:
   - namespace.yml
   - configmap.yml
