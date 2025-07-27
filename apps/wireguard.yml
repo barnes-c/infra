@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wireguard
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://angelnu.github.io/helm-charts
+    chart: wireguard
+    targetRevision: 4.1.0
+    helm:
+      valueFiles:
+        - apps/wireguard/values.yml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: wireguard
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
