@@ -1,29 +1,32 @@
-settings:
-  VPN:
-    WIREGUARD_ENABLED: true
-
-  WIREGUARD:
-    ADDRESS: 10.13.13.1/24
-    PRIVATE_KEY_SECRET:
-      name: wireguard-keys
-      key: privatekey
-    PEERS:
-      - PUBLIC_KEY_SECRET:
-          name: wireguard-keys
-          key: publickey
-        ALLOWED_IPS: "10.13.13.2/32"
-
-  INIT_IMAGE: ghcr.io/angelnu/wireguard
-  SIDECAR_IMAGE: ghcr.io/angelnu/wireguard
+daemonSet: false
 
 image:
-  repository: ghcr.io/angelnu/wireguard
-  tag: latest
+  repository: ghcr.io/bryopsida/wireguard
+  tag: main
+  pullPolicy: Always
 
-resources:
-  limits:
-    memory: 512Mi
-    cpu: 500m
-  requests:
-    memory: 128Mi
-    cpu: 100m
+keygenJob:
+  useWireguardManager: true
+
+runPodOnHostNetwork: true
+useHostPort: true
+hostPort: 51820
+
+service:
+  enabled: true
+  type: LoadBalancer
+  port: 51820
+  externalTrafficPolicy: Local
+
+wireguard:
+  serverAddress: 10.13.13.1/24
+  serverCidr: 10.13.13.0/24
+  natAddSourceNet: true
+  clients:
+    - FriendlyName: barnes-c
+      AllowedIPs: 10.13.13.2/32
+      PublicKey: QvzMfOuEKi0+EMxq3ZvPnLDc7QlGCsZPwt/uy7k5Tg0=
+    - FriendlyName: barnes-c-phone
+      AllowedIPs: 10.13.13.3/32
+      PublicKey: BArAnhi2miDYAufjB3YXKslaeyabI5PHPu24a7Q5CH0=
+  
