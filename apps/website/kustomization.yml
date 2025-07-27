@@ -2,4 +2,4 @@
 resources:
   - deployment.yml
   - service.yml
-  - ingressroute.yml
+  - ingress.yml
