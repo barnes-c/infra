@@ -16,7 +16,7 @@ spec:
       source:
         repoURL: https://github.com/barnes-c/cluster
         targetRevision: HEAD
-        path: apps/monitoring/{{path.basename}}
+        path: apps/charts/monitoring/{{path.basename}}
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring
