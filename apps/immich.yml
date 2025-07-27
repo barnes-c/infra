@@ -10,9 +10,6 @@ spec:
     targetRevision: master
     path: apps/immich
     helm:
-      chart: immich
-      repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.9.3
       valueFiles:
         - values.yml
   destination:
