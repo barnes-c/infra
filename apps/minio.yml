@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: master
-    path: apps/minio
+    path: apps/charts/minio
     helm:
       valueFiles:
         - values.yml 

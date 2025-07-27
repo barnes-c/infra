@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: HEAD
-    path: apps/website
+    path: apps/charts/website
   destination:
     server: https://kubernetes.default.svc
     namespace: website

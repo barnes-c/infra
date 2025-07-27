@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: master
-    path: apps/immich
+    path: apps/charts/immich
     helm:
       valueFiles:
         - values.yml
