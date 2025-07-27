@@ -16,9 +16,11 @@ spec:
     spec:
       containers:
         - name: website
-          image: eugenmayer/docker-redirect
+          image: staticredirect/nginx-redirect
           env:
-            - name: REDIRECT_TARGET
+            - name: REDIRECT_URL
               value: "https://github.com/barnes-c"
+            - name: REDIRECT_CODE
+              value: "301"
           ports:
             - containerPort: 80
