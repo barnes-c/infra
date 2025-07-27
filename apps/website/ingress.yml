@@ -1,0 +1,17 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: website
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`barnes.biz`)
+      kind: Rule
+      services:
+        - name: website
+          port: 80
+  tls:
+    certResolver: letsencrypt
