@@ -6,8 +6,8 @@ metadata:
 spec:
   generators:
     - directory:
-        configMapRef: repo-root
-        directory: apps/monitoring
+        configMapRef: monitoring-root
+        directory: apps/charts/monitoring
   template:
     metadata:
       name: '{{path.basename}}'
@@ -17,11 +17,6 @@ spec:
         repoURL: https://github.com/barnes-c/cluster
         targetRevision: HEAD
         path: apps/monitoring/{{path.basename}}
-        helm:
-          valueFiles:
-            - values.yaml
-        chart: '{{path.basename}}'
-        repoURL: '{{repo_url}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring
@@ -29,10 +24,3 @@ spec:
         automated:
           selfHeal: true
           prune: true
-  templateParameters:
-    - name: repo_url
-      values:
-        grafana: https://grafana.github.io/helm-charts
-        prometheus: https://prometheus-community.github.io/helm-charts
-        loki: https://grafana.github.io/helm-charts
-        fluent-bit: https://fluent.github.io/helm-charts
