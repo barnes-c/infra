@@ -1,15 +1,10 @@
-## This chart relies on the common library chart from bjw-s
-## You can find it at https://github.com/bjw-s-labs/helm-charts/tree/923ef40a39520979c98f354ea23963ee54f54433/charts/library/common
-## Refer there for more detail about the supported values
-
-# These entries are shared between all the Immich components
 ---
 env:
   REDIS_HOSTNAME: immich-redis-master
   DB_USERNAME: immich
   DB_DATABASE_NAME: immich
   DB_PASSWORD: immichpass
-
+  DB_HOSTNAME: immich-postgresql
 
 image:
   tag: v1.119.0
@@ -27,11 +22,6 @@ immich:
     library:
       existingClaim: immich-library
 
-# Dependencies
-
-# DEPRECATED
-# The postgres subchart is deprecated and will be removed in chart version 0.10.0
-# See https://github.com/immich-app/immich-charts/issues/149 for more detail.
 postgresql:
   enabled: true
   image:
@@ -68,13 +58,17 @@ redis:
       size: 256Mi
       storageClass: longhorn
 
-# Immich components
-
 server:
   enabled: true
   image:
     repository: ghcr.io/immich-app/immich-server
     pullPolicy: IfNotPresent
+  env:
+    DB_HOSTNAME: immich-postgresql
+    DB_USERNAME: immich
+    DB_DATABASE_NAME: immich
+    DB_PASSWORD: immichpass
+    REDIS_HOSTNAME: immich-redis-master
   ingress:
     main:
       enabled: true
@@ -92,9 +86,6 @@ server:
         - hosts:
             - img.barnes.biz
           secretName: img.barnes.biz-tls
-  extraEnv:
-    - name: LOG_LEVEL
-      value: debug
 
 machine-learning:
   enabled: false
