@@ -1,4 +1,3 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -6,9 +5,11 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - directory:
-        configMapRef: monitoring-root
-        directory: apps/charts/monitoring
+    - git:
+        repoURL: https://github.com/barnes-c/cluster
+        revision: HEAD
+        directories:
+          - path: apps/charts/monitoring/*
   template:
     metadata:
       name: '{{path.basename}}'
