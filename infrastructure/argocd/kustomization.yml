@@ -9,7 +9,7 @@ helmCharts:
     version: 5.19.12
     releaseName: argocd
     namespace: argocd
-    valuesFile: values.yml
+    valuesFile: values.yaml
 
 resources:
-  - namespace.yml
+  - namespace.yaml

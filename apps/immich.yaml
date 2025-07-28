@@ -2,21 +2,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wireguard
+  name: immich
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: master
-    path: apps/charts/wireguard
+    path: apps/charts/immich
     helm:
       valueFiles:
-        - values.yml 
+        - values.yaml
+    buildDependencies: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: wireguard
+    namespace: immich
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

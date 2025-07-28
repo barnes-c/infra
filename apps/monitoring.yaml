@@ -20,7 +20,7 @@ spec:
         path: apps/charts/monitoring/{{path.basename}}
         helm:
           valueFiles:
-            - values.yml
+            - values.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring

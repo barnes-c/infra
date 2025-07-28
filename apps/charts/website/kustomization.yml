@@ -1,9 +1,0 @@
----
-namespace: website
-
-resources:
-  - namespace.yml
-  - configmap.yml
-  - deployment.yml
-  - ingress.yml
-  - service.yml
