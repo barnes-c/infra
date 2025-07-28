@@ -13,7 +13,6 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-    buildDependencies: true
   destination:
     server: https://kubernetes.default.svc
     namespace: immich
