@@ -1,31 +1,31 @@
----
-adminPassword: changeme
+grafana:
+  adminPassword: changeme
 
-ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-  hosts:
-    - monitoring.barnes.biz
-  paths:
-    - /
-  pathType: Prefix
-  tls:
-    - hosts:
-        - monitoring.barnes.biz
-      secretName: monitoring-tls
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - monitoring.barnes.biz
+    paths:
+      - /
+    pathType: Prefix
+    tls:
+      - hosts:
+          - monitoring.barnes.biz
+        secretName: monitoring-tls
 
-datasources:
-  datasources.yaml:
-    apiVersion: 1
-    datasources:
-      - name: Prometheus
-        type: prometheus
-        url: http://prometheus-operated.monitoring.svc.cluster.local:9090
-        access: proxy
-        isDefault: true
-      - name: Loki
-        type: loki
-        url: http://loki.monitoring.svc.cluster.local:3100
-        access: proxy
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-operated.monitoring.svc.cluster.local:9090
+          access: proxy
+          isDefault: true
+        - name: Loki
+          type: loki
+          url: http://loki.monitoring.svc.cluster.local:3100
+          access: proxy
