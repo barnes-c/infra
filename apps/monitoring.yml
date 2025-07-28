@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -17,6 +18,9 @@ spec:
         repoURL: https://github.com/barnes-c/cluster
         targetRevision: HEAD
         path: apps/charts/monitoring/{{path.basename}}
+        helm:
+          valueFiles:
+            - values.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring
