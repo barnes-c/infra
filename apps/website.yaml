@@ -15,5 +15,7 @@ spec:
     namespace: website
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
