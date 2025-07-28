@@ -32,13 +32,12 @@ In my set up the cluster board is up to use two Raspberry [CM5s](https://www.ras
 
 ![CM5](https://github.com/barnes-c/cluster/blob/master/docs/images/CM5.webp)
 
-![Longan Pi 3H](https://github.com/barnes-c/cluster/blob/master/docs/images/LM3H.jpg)
+![Longan Pi 3H](https://github.com/barnes-c/cluster/blob/master/docs/images/LM3H.webp)
 
 ### Cluster Storage
 Each CM has a [Transcend M.2 NVMe SSD](https://www.conrad.de/de/p/transcend-mts400s-256-gb-interne-m-2-pcie-nvme-ssd-2242-pcie-nvme-3-0-x4-retail-ts256gmte400s-2796245.html?utm_source=google&utm_medium=organic&utm_campaign=shopping) attached over a SoM. So four NVMe's totalling to 768GB of storage
 
-![Transcend M.2 NVMe SSD](https://github.com/barnes-c/cluster/blob/master/docs/images/NVME.webp)
-
+![Transcend M.2 NVMe SSD](https://github.com/barnes-c/cluster/blob/master/docs/images/NVME.jpg)
 
 ### Power Management
 The cluster is powered with PoE. The PoE module for the Sipeed NanoCluster is capped at 60W. The current installed hardware draws:
@@ -71,7 +70,7 @@ All applications are defined in the Git repository and deployed via ArgoCD using
 - **Traefik** - Ingress controller for external HTTP/S traffic
 - **cert-manager** - TLS certificate management
 - **Longhorn** - Distributed block storage
-- **Cilium** - CNI and network security
+- **Cilium** - CNI and Load-Balancer
 
 ### Monitoring Stack
 
