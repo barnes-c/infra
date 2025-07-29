@@ -109,9 +109,9 @@ args:
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 2283
 
 readinessProbe:
   httpGet:
     path: /api/v1/health
-    port: http
+    port: 2283
