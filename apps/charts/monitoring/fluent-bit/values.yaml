@@ -26,6 +26,15 @@ tolerations:
     operator: Exists
     effect: NoSchedule
 
+outputs:
+  enabled: false
+inputs:
+  enabled: false
+filters:
+  enabled: false
+parsers:
+  enabled: false
+
 config:
   service: |
     [SERVICE]
@@ -109,9 +118,9 @@ args:
 livenessProbe:
   httpGet:
     path: /
-    port: 2283
+    port: http
 
 readinessProbe:
   httpGet:
     path: /api/v1/health
-    port: 2283
+    port: http
