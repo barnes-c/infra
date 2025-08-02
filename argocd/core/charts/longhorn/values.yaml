@@ -1,0 +1,36 @@
+---
+defaultSettings:
+  defaultDataPath: /mnt/longhorn
+  defaultLonghornStaticStorageClass: longhorn
+  defaultReplicaAutoBalance: best-effort
+
+persistence:
+  defaultClass: true
+  reclaimPolicy: Delete
+
+preUpgradeChecker:
+  jobEnabled: false
+  upgradeVersionCheck: true
+
+longhornUI:
+  replicas: 1
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  hosts:
+    - longhorn.barnes.biz
+  tls:
+    - secretName: longhorn-tls
+      hosts:
+        - longhorn.barnes.biz
+
+metrics:
+  serviceMonitor:
+    enabled: true
+    interval: "30s"
+    scrapeTimeout: "2m"

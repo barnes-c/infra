@@ -1,0 +1,76 @@
+---
+global:
+  domain: argo.barnes.biz
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    hosts:
+      - argo.barnes.biz
+    tls:
+      - secretName: argocd-tls
+        hosts:
+          - argo.barnes.biz
+
+  service:
+    type: ClusterIP
+
+  extraArgs:
+    - --insecure
+
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+configs:
+  cm:
+    application.instanceLabelKey: argo.argoproj.io/instance
+    timeout.reconciliation: 180s
+
+  rbac:
+    policy.default: role:readonly
+    policy.csv: |
+      g, system:authenticated, role:admin
+
+  secret:
+    createSecret: true
+
+controller:
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+repoServer:
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+applicationSet:
+  enabled: true
+
+dex:
+  enabled: true
+
+redis:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      memory: 128Mi

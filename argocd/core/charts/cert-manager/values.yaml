@@ -1,0 +1,9 @@
+---
+installCRDs: true
+
+global:
+  namespace: cert-manager
+
+acme:
+  email: robot@barnes.biz
+  secretName: letsencrypt-prod
