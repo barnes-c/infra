@@ -10,7 +10,6 @@ spec:
     server: https://kubernetes.default.svc
   project: core
   source:
-    chart: ingress-nginx
     helm:
       valueFiles:
         - values.yaml
