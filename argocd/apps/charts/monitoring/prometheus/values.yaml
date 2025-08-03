@@ -7,13 +7,14 @@ grafana:
 
 prometheus:
   prometheusSpec:
-    serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
-    retention: 10d
     resources:
       requests:
-        memory: 400Mi
         cpu: 200m
+        memory: 400Mi
 
+    retention: 10d
     service:
       type: ClusterIP
+
+    serviceMonitorSelectorNilUsesHelmValues: false

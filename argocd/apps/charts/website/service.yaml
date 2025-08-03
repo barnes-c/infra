@@ -5,9 +5,9 @@ metadata:
   name: website
   namespace: website
 spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     app: website
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80

@@ -6,15 +6,15 @@ grafana:
     datasources.yaml:
       apiVersion: 1
       datasources:
-        - name: Loki
-          access: proxy
-          type: loki
-          url: http://loki.monitoring.svc.cluster.local:3100
-        - name: Prometheus
-          access: proxy
+        - access: proxy
           isDefault: true
+          name: Prometheus
           type: prometheus
           url: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        - access: proxy
+          name: Loki
+          type: loki
+          url: http://loki.monitoring.svc.cluster.local:3100
 
   ingress:
     annotations:

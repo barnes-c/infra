@@ -2,24 +2,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: traefik
   name: website
   namespace: website
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  tls:
-    - hosts:
-        - barnes.biz
-      secretName: website-tls
   rules:
     - host: barnes.biz
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: website
                 port:
                   number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - barnes.biz
+      secretName: website-tls

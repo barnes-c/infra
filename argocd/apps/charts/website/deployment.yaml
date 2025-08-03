@@ -15,12 +15,13 @@ spec:
         app: website
     spec:
       containers:
-        - name: nginx
-          image: nginx:stable-alpine
+        - image: nginx:stable-alpine
+          name: nginx
           volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
+            - mountPath: /etc/nginx/conf.d
+              name: nginx-config
+
       volumes:
-        - name: nginx-config
-          configMap:
+        - configMap:
             name: website-redirect
+          name: nginx-config
