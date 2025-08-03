@@ -1,8 +1,11 @@
+---
 apiVersion: v2
-appVersion: 0.0.0
+appVersion: xxx
+dependencies:
+  - name: wireguard
+    repository: xxx
+    version: xxx
 description: A Helm chart for managing a wireguard vpn in kubernetes
-maintainers:
-- name: bryopsida
 name: wireguard
 type: application
-version: 0.30.0
+version: 1.0.0

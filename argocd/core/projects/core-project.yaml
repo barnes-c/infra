@@ -5,17 +5,17 @@ metadata:
   name: core
   namespace: argocd
 spec:
-  description: Core infrastructure apps
-  sourceRepos:
-    - https://github.com/barnes-c/cluster.git
-  destinations:
-    - namespace: '*'
-      server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
+  description: Core infrastructure apps
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
   orphanedResources:
     warn: true
+  sourceRepos:
+    - https://github.com/barnes-c/cluster.git

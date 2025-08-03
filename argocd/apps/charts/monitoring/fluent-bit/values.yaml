@@ -1,16 +1,17 @@
+---
 flush: 1
 logLevel: info
 metricsPort: 2020
 
 resources:
   limits:
-    nofile: 65536
-    memory: 256Mi
     cpu: 200m
-  requests:
+    memory: 256Mi
     nofile: 65536
-    memory: 128Mi
+  requests:
     cpu: 100m
+    memory: 128Mi
+    nofile: 65536
 
 securityContext:
   runAsUser: 0
@@ -22,9 +23,9 @@ podSecurityPolicy:
   create: false
 
 tolerations:
-  - key: node-role.kubernetes.io/master
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
     operator: Exists
-    effect: NoSchedule
 
 outputs:
   enabled: false
@@ -36,6 +37,43 @@ parsers:
   enabled: false
 
 config:
+  customParsers: |
+    [PARSER]
+        Name docker
+        Format json
+        Time_Key time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L
+        Time_Keep On
+
+  filters: |
+    [FILTER]
+        Name kubernetes
+        Match kube.*
+        Merge_Log On
+        Keep_Log Off
+        K8S-Logging.Parser On
+        K8S-Logging.Exclude On
+
+  inputs: |
+    [INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        Tag kube.*
+        Parser docker
+        DB /var/log/flb_kube.db
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+
+  outputs: |
+    [OUTPUT]
+        Name loki
+        Match kube.*
+        Host loki.monitoring.svc.cluster.local
+        Port 3100
+        Labels job=fluent-bit,namespace=${NAMESPACE},pod=${POD_NAME},container=${CONTAINER_NAME}
+        LineFormat json
+        Auto_Kubernetes_Labels On
+
   service: |
     [SERVICE]
         Daemon Off
@@ -48,68 +86,30 @@ config:
         HTTP_Port {{ .Values.metricsPort }}
         Health_Check On
 
-  inputs: |
-    [INPUT]
-        Name tail
-        Path /var/log/containers/*.log
-        Tag kube.*
-        Parser docker
-        DB /var/log/flb_kube.db
-        Mem_Buf_Limit 5MB
-        Skip_Long_Lines On
-
-  filters: |
-    [FILTER]
-        Name kubernetes
-        Match kube.*
-        Merge_Log On
-        Keep_Log Off
-        K8S-Logging.Parser On
-        K8S-Logging.Exclude On
-
-  outputs: |
-    [OUTPUT]
-        Name loki
-        Match kube.*
-        Host loki.monitoring.svc.cluster.local
-        Port 3100
-        Labels job=fluent-bit,namespace=${NAMESPACE},pod=${POD_NAME},container=${CONTAINER_NAME}
-        LineFormat json
-        Auto_Kubernetes_Labels On
-
-  customParsers: |
-    [PARSER]
-        Name docker
-        Format json
-        Time_Key time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L
-        Time_Keep On
-
 daemonSetVolumes:
-  - name: varlog
-    hostPath:
+  - hostPath:
       path: /var/log
-  - name: varlibdockercontainers
-    hostPath:
+    name: varlog
+  - hostPath:
       path: /var/lib/docker/containers
-  - name: etcmachineid
-    hostPath:
+    name: varlibdockercontainers
+  - hostPath:
       path: /etc/machine-id
       type: File
-
+    name: etcmachineid
 daemonSetVolumeMounts:
-  - name: varlog
-    mountPath: /var/log
-  - name: varlibdockercontainers
-    mountPath: /var/lib/docker/containers
+  - mountPath: /var/log
+    name: varlog
+  - mountPath: /var/lib/docker/containers
+    name: varlibdockercontainers
     readOnly: true
-  - name: etcmachineid
-    mountPath: /etc/machine-id
+  - mountPath: /etc/machine-id
+    name: etcmachineid
     readOnly: true
 
 volumeMounts:
-  - name: config
-    mountPath: /fluent-bit/etc/conf
+  - mountPath: /fluent-bit/etc/conf
+    name: config
 
 args:
   - --workdir=/fluent-bit/etc

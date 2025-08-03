@@ -16,21 +16,20 @@ longhornUI:
   replicas: 1
 
 ingress:
-  enabled: true
-  ingressClassName: nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/backend-protocol: 'HTTPS'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+  enabled: true
   hosts:
     - longhorn.barnes.biz
+  ingressClassName: nginx
   tls:
-    - secretName: longhorn-tls
-      hosts:
+    - hosts:
         - longhorn.barnes.biz
-
+      secretName: longhorn-tls
 metrics:
   serviceMonitor:
     enabled: true
-    interval: "30s"
-    scrapeTimeout: "2m"
+    interval: '30s'
+    scrapeTimeout: '2m'

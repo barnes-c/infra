@@ -5,17 +5,17 @@ metadata:
   name: default
   namespace: argocd
 spec:
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
   description: Default project for user-facing apps
-  sourceRepos:
-    - https://github.com/barnes-c/cluster.git
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc
-  clusterResourceWhitelist:
-    - group: ""
-      kind: Namespace
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
   orphanedResources:
     warn: false
+  sourceRepos:
+    - https://github.com/barnes-c/cluster.git

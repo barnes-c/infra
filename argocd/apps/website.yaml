@@ -5,14 +5,14 @@ metadata:
   name: website
   namespace: argocd
 spec:
+  destination:
+    namespace: website
+    server: https://kubernetes.default.svc
   project: default
   source:
+    path: argocd/apps/charts/website
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: HEAD
-    path: argocd/apps/charts/website
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: website
   syncPolicy:
     automated:
       prune: true

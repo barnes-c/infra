@@ -5,14 +5,14 @@ metadata:
   name: apps-root
   namespace: argocd
 spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
   project: default
   source:
+    path: argocd/apps
     repoURL: https://github.com/barnes-c/cluster
     targetRevision: HEAD
-    path: argocd/apps
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
   syncPolicy:
     automated:
       prune: true

@@ -1,12 +1,11 @@
 ---
 apiVersion: v2
-name: longhorn
-description: A Helm chart to deploy Longhorn
-type: application
-version: 1.0.0
 appVersion: 1.9.1
-
 dependencies:
   - name: longhorn
-    version: 1.9.1
     repository: https://charts.longhorn.io
+    version: 1.9.1
+description: A Helm chart to deploy Longhorn
+name: longhorn
+type: application
+version: 1.0.0

@@ -1,12 +1,12 @@
 ---
 controller:
-  replicaCount: 1
-  ingressClassResource:
-    name: nginx
-    enabled: true
-    default: true
   ingressClass: nginx
-  service:
-    type: LoadBalancer
+  ingressClassResource:
+    default: true
+    enabled: true
+    name: nginx
   metrics:
     enabled: true
+  replicaCount: 1
+  service:
+    type: LoadBalancer

@@ -5,18 +5,18 @@ metadata:
   name: ingress-nginx
   namespace: ingress-nginx
 spec:
-  project: core
-  source:
-    repoURL: https://kubernetes.github.io/ingress-nginx
-    chart: ingress-nginx
-    targetRevision: 4.10.1
-    path: argocd/core/charts/ingress-nginx
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     namespace: ingress-nginx
     server: https://kubernetes.default.svc
+  project: core
+  source:
+    chart: ingress-nginx
+    helm:
+      valueFiles:
+        - values.yaml
+    path: argocd/core/charts/ingress-nginx
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    targetRevision: 4.10.1
   syncPolicy:
     automated:
       prune: true

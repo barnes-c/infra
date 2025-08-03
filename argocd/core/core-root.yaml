@@ -5,14 +5,14 @@ metadata:
   name: core
   namespace: argocd
 spec:
-  project: core
-  source:
-    repoURL: https://github.com/barnes-c/cluster
-    targetRevision: HEAD
-    path: argocd/core
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
+  project: core
+  source:
+    path: argocd/core
+    repoURL: https://github.com/barnes-c/cluster
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
