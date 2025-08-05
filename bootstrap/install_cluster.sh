@@ -82,10 +82,15 @@ kubectl rollout status -n argocd deployment/argocd-server --timeout=180s
 ### 7. Apply AppProjects before Applications ###
 echo "Applying ArgoCD projects..."
 kubectl apply -f "${REPO_ROOT}/argocd/core/projects/core-project.yaml"
-kubectl apply -f "${REPO_ROOT}/argocd/core/projects/default-project.yaml"
 
 ### 8. Apply core-root (starts ArgoCD self-management) ###
 echo "Bootstrapping ArgoCD GitOps apps..."
 kubectl apply -f "${REPO_ROOT}/argocd/core/core-root.yaml"
 
+### 9. Insert CRDs for cert-manager
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml
+
 echo "Bootstrap complete. ArgoCD is now managing the cluster."
+
+sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+sudo chown $(id -u):$(id -g) ~/.kube/config
