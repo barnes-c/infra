@@ -3,6 +3,10 @@ acme:
   email: robot@barnes.biz
   secretName: letsencrypt-prod
 
+crds:
+  enabled: true
+  keep: true
+
 global:
   namespace: cert-manager
 

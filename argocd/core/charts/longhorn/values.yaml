@@ -9,6 +9,7 @@ persistence:
   reclaimPolicy: Delete
 
 preUpgradeChecker:
+  # Disabled because deployed with Argo
   jobEnabled: false
   upgradeVersionCheck: true
 
