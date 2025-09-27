@@ -1,9 +1,0 @@
----
-namespace: website
-
-resources:
-  - namespace.yaml
-  - configmap.yaml
-  - deployment.yaml
-  - ingress.yaml
-  - service.yaml
