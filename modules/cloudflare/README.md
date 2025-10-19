@@ -13,6 +13,4 @@ The Terraform configuration defines DNS records for:
 The actual domain is registered at [**Porkbun**](https://porkbun.com/), but DNS is managed through **Cloudflare**.  
 Some records are **proxied** for traffic protection and performance, while others (like mail records) remain unproxied to ensure correct mail delivery.
 
-## Notes
-
-- The `A` and `AAAA` record values are managed by a separate Dynamic DNS (DyDNS) process. A Kubernetes CronJob runs every five minutes to update these records with the current public IP addresses.
+The `A` and `AAAA` record values are managed by a separate Dynamic DNS (DyDNS) process. A Kubernetes CronJob runs every five minutes to update these records with the current public IP addresses.
