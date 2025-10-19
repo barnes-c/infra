@@ -3,7 +3,6 @@ resource "cloudflare_dns_record" "barnes_biz_root_ip4" {
   name    = "barnes.biz"
   ttl     = 1
   type    = "A"
-  comment = "DNS root A record created by Terraform"
   content = "149.172.144.12"
   proxied = true
 }
@@ -13,7 +12,6 @@ resource "cloudflare_dns_record" "barnes_biz_wildcard_ip4" {
   name    = "*"
   ttl     = 1
   type    = "A"
-  comment = "DNS wildcard A record created by Terraform"
   content = "149.172.144.12"
   proxied = true
 }
@@ -23,7 +21,6 @@ resource "cloudflare_dns_record" "barnes_biz_root_ip6" {
   name    = "barnes.biz"
   ttl     = 1
   type    = "AAAA"
-  comment = "DNS root AAAA record created by Terraform"
   content = "2a02:8071:3486:67a0:e65f:1ff:fea6:be19"
   proxied = true
 }
@@ -33,7 +30,6 @@ resource "cloudflare_dns_record" "barnes_biz_wildcard_ip6" {
   name    = "*"
   ttl     = 1
   type    = "AAAA"
-  comment = "DNS wildcard AAAA record created by Terraform"
   content = "2a02:8071:3486:67a0:e65f:1ff:fea6:be19"
   proxied = true
 }
