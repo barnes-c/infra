@@ -1,8 +1,6 @@
-# Cluster
+# Infra
 
-A personal [Kubernetes](https://kubernetes.io/) cluster running on [TalOS](https://www.talos.dev/).
-
-
+This repository holds the Infrastructure-as-Code (IaC) definitions for my Cloudflare resources and a [Kubernetes](https://kubernetes.io/) cluster running on [TalOS](https://www.talos.dev/).
 
 ## License
 
