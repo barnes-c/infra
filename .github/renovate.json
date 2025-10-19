@@ -1,0 +1,62 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":semanticCommits",
+        ":dependencyDashboard",
+        "helpers:pinGitHubActionDigests"
+    ],
+    "labels": [
+        "dependencies"
+    ],
+    "rangeStrategy": "bump",
+    "schedule": [
+        "at any time"
+    ],
+    "automerge": false,
+    "assignees": [
+        "barnes-c"
+    ],
+    "reviewers": [
+        "barnes-c"
+    ],
+    "prHourlyLimit": 0,
+    "prConcurrentLimit": 0,
+    "packageRules": [
+        {
+            "matchManagers": [
+                "github-actions"
+            ],
+            "groupName": "github actions"
+        },
+        {
+            "matchManagers": [
+                "dockerfile",
+                "docker-compose"
+            ],
+            "groupName": "docker"
+        },
+        {
+            "matchManagers": [
+                "kubernetes",
+                "helm-values",
+                "helm-requirements"
+            ],
+            "groupName": "k8s"
+        },
+        {
+            "matchManagers": [
+                "terraform",
+                "terraform-version",
+                "opentofu"
+            ],
+            "groupName": "terraform & opentofu"
+        }
+    ],
+    "kubernetes": {
+        "fileMatch": [
+            "(^|/)(k8s|kubernetes|manifests|deployments)/.+\\.ya?ml$",
+            "(^|/)kustomization\\.ya?ml$"
+        ]
+    }
+}
