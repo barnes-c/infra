@@ -1,0 +1,16 @@
+!terraform.tfvars
+.terraform
+.terraform.tfstate.lock.info
+.terraform*
+.terraformrc
+*.tfstate
+*.tfstate.*
+**/.terraform/*
+/test
+override.tf
+override.tf.json
+registry.terraform.io/
+terraform-provider-*
+terraform.plan
+terraform.rc
+terraform.tfstate
