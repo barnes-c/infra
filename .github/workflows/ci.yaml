@@ -17,7 +17,7 @@ jobs:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
-      tofu: ${{ steps.filter.outputs.tofu }}
+      terraform: ${{ steps.filter.outputs.terraform }}
       kube: ${{ steps.filter.outputs.kube }}
       helm: ${{ steps.filter.outputs.helm }}
       yaml: ${{ steps.filter.outputs.yaml }}
@@ -29,7 +29,7 @@ jobs:
         uses: dorny/paths-filter@v3
         with:
           filters: |
-            tofu:
+            terraform:
               - 'terraform/**'
               - '**/*.tf'
               - '**/*.tfvars'
@@ -56,17 +56,17 @@ jobs:
   iac-validation:
     name: IaC Validation
     needs: changes
-    if: needs.changes.outputs.tofu == 'true'
+    if: needs.changes.outputs.terraform == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: opentofu/setup-opentofu@v1
+      - uses: hashicorp/setup-terraform@v3
       - name: fmt
-        run: tofu fmt -check -recursive
+        run: terraform fmt -check -recursive
       - name: init
-        run: tofu init
+        run: terraform init
       - name: validate
-        run: tofu validate
+        run: terraform validate
       - name: tfsec
         uses: aquasecurity/tfsec-action@v1.0.3
 
