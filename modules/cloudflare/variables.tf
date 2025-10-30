@@ -10,7 +10,7 @@ variable "cloudflare_api_token" {
   sensitive   = true
 }
 
-variable "zone_name" {
+variable "cloudflare_dns_zone_name" {
   description = "Cloudflare zone name"
   type        = string
   default     = "barnes.biz"
