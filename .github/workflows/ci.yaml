@@ -1,0 +1,166 @@
+---
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      terraform: ${{ steps.filter.outputs.terraform }}
+      kube: ${{ steps.filter.outputs.kube }}
+      helm: ${{ steps.filter.outputs.helm }}
+      yaml: ${{ steps.filter.outputs.yaml }}
+      md: ${{ steps.filter.outputs.md }}
+      security: ${{ steps.filter.outputs.security }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - id: filter
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3
+        with:
+          filters: |
+            generic:
+              - '**/*.md'
+              - '**/*.yml'
+              - '**/*.yaml'
+              - '**/*.sh'
+              - '**/Dockerfile'
+            terraform:
+              - 'terraform/**'
+              - '**/*.tf'
+              - '**/*.tfvars'
+              - '**/*.tf.json'
+            kube:
+              - 'kubernetes/**'
+              - 'manifests/**'
+              - '**/*.k8s.yml'
+              - '**/kustomization.yml'
+            helm:
+              - 'charts/**'
+            security:
+              - '**/*'
+
+  generic-lint:
+    name: Generic Linter
+    needs: changes
+    if: needs.changes.outputs.generic == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        with:
+          fetch-depth: 0
+      - name: Super-Linter
+        uses: super-linter/super-linter@2bdd90ed3262e023ac84bf8fe35dc480721fc1f2 # v8
+        env:
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_SHELL_SHFMT: true
+          VALIDATE_SHELL: true
+          VALIDATE_DOCKERFILE_HADOLINT: true
+
+          LINTER_RULES_PATH: .github
+          YAML_CONFIG_FILE: .yamllint.yml
+          MARKDOWN_CONFIG_FILE: .markdownlint.json
+          MARKDOWN_RULESETS: .markdownlint.json
+
+  iac-validation:
+    name: IaC Validation
+    needs: changes
+    if: needs.changes.outputs.terraform == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -input=false
+      - run: terraform validate
+      - name: tfsec
+        uses: aquasecurity/tfsec-action@b466648d6e39e7c75324f25d83891162a721f2d6 # v1.0.3
+
+  kube:
+    name: Kubernetes manifest validation
+    needs: changes
+    if: needs.changes.outputs.kube == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: yannh/kubeconform-action@v1
+        with:
+          kubeconform-args: >
+            -verbose
+            -strict
+            -ignore-missing-schemas
+            -summary
+            -schema-location default
+            -schema-location https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master
+          files: |
+            kubernetes
+            manifests
+  helm:
+    name: Helm lint
+    needs: changes
+    if: needs.changes.outputs.helm == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+      - run: |
+          if [ -d charts ]; then
+            find charts -maxdepth 2 -name Chart.yaml -print0 \
+              | xargs -0 -n1 dirname \
+              | while read -r chart; do helm lint "$chart"; done
+          else
+            echo "No charts/ directory; skipping."
+          fi
+
+  yamllint:
+    name: YAML lint
+    needs: changes
+    if: needs.changes.outputs.yaml == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c # v3
+        with:
+          config_file: .github/.yamllint.yaml
+          strict: true
+
+  markdown:
+    name: Markdown lint
+    needs: changes
+    if: needs.changes.outputs.md == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - name: markdownlint-cli2
+        uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e # v20
+        with:
+          globs: |
+            **/*.md
+          config: .github/.markdownlint.jsonc
+
+  security:
+    name: IaC policy scan
+    needs: changes
+    if: needs.changes.outputs.security == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: bridgecrewio/checkov-action@d146511ffb733a9a456c9ffc05cd462122037354 # v12
+        with:
+          directory: .
+          quiet: true
