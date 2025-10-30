@@ -63,6 +63,8 @@ jobs:
       - uses: opentofu/setup-opentofu@v1
       - name: fmt
         run: tofu fmt -check -recursive
+      - name: init
+        run: tofu init
       - name: validate
         run: tofu validate
       - name: tfsec
