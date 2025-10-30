@@ -29,6 +29,12 @@ jobs:
         uses: dorny/paths-filter@v3
         with:
           filters: |
+            generic:
+              - '**/*.md'
+              - '**/*.yml'
+              - '**/*.yaml'
+              - '**/*.sh'
+              - '**/Dockerfile'
             terraform:
               - 'terraform/**'
               - '**/*.tf'
@@ -38,20 +44,38 @@ jobs:
               - 'kubernetes/**'
               - 'manifests/**'
               - '**/*.k8s.yml'
-              - '**/*.k8s.yaml'
-              - '**/*.kubernetes.yml'
-              - '**/*.kubernetes.yaml'
               - '**/kustomization.yml'
-              - '**/kustomization.yaml'
             helm:
               - 'charts/**'
-            yaml:
-              - '**/*.yml'
-              - '**/*.yaml'
-            md:
-              - '**/*.md'
             security:
               - '**/*'
+
+  generic-lint:
+    name: Generic Linter
+    needs: changes
+    if: needs.changes.outputs.generic == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Super-Linter
+        uses: super-linter/super-linter@v6
+        env:
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_SHELL_SHFMT: true
+          VALIDATE_SHELL: true
+          VALIDATE_DOCKERFILE_HADOLINT: true
+
+          LINTER_RULES_PATH: .github
+          YAML_CONFIG_FILE: .yamllint.yml
+          MARKDOWN_CONFIG_FILE: .markdownlint.json
+          MARKDOWN_RULESETS: .markdownlint.json
 
   iac-validation:
     name: IaC Validation
@@ -61,12 +85,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
-      - name: fmt
-        run: terraform fmt -check -recursive
-      - name: init
-        run: terraform init
-      - name: validate
-        run: terraform validate
+      - run: terraform fmt -check -recursive
+      - run: terraform init -input=false
+      - run: terraform validate
       - name: tfsec
         uses: aquasecurity/tfsec-action@v1.0.3
 
@@ -77,8 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: kubeconform
-        uses: yannh/kubeconform-action@v1
+      - uses: yannh/kubeconform-action@v1
         with:
           kubeconform-args: >
             -verbose
@@ -90,7 +110,6 @@ jobs:
           files: |
             kubernetes
             manifests
-
   helm:
     name: Helm lint
     needs: changes
@@ -99,12 +118,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: azure/setup-helm@v4
-      - name: helm lint
-        run: |
+      - run: |
           if [ -d charts ]; then
-            find charts -maxdepth 2 -name Chart.yaml -print0 | xargs -0 -n1 dirname | while read -r chart; do
-              helm lint "$chart"
-            done
+            find charts -maxdepth 2 -name Chart.yaml -print0 \
+              | xargs -0 -n1 dirname \
+              | while read -r chart; do helm lint "$chart"; done
           else
             echo "No charts/ directory; skipping."
           fi
@@ -116,10 +134,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: yamllint
-        uses: ibiqlik/action-yamllint@v3
+      - uses: ibiqlik/action-yamllint@v3
         with:
-          config_file: .github/yamllint.yaml
+          config_file: .github/.yamllint.yaml
           strict: true
 
   markdown:
@@ -143,8 +160,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Checkov
-        uses: bridgecrewio/checkov-action@v12
+      - uses: bridgecrewio/checkov-action@v12
         with:
           directory: .
           quiet: true
