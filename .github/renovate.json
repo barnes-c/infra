@@ -54,9 +54,9 @@
         }
     ],
     "kubernetes": {
-        "fileMatch": [
-            "(^|/)(k8s|kubernetes|manifests|deployments)/.+\\.ya?ml$",
-            "(^|/)kustomization\\.ya?ml$"
+        "managerFilePatterns": [
+            "/(^|/)(k8s|kubernetes|manifests|deployments)/.+\\.ya?ml$/",
+            "/(^|/)kustomization\\.ya?ml$/"
         ]
     }
 }
