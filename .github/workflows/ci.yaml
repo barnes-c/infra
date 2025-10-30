@@ -17,6 +17,7 @@ jobs:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
+      generic: ${{ steps.filter.outputs.generic }}
       terraform: ${{ steps.filter.outputs.terraform }}
       kube: ${{ steps.filter.outputs.kube }}
       helm: ${{ steps.filter.outputs.helm }}
