@@ -24,7 +24,7 @@ jobs:
       md: ${{ steps.filter.outputs.md }}
       security: ${{ steps.filter.outputs.security }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - id: filter
         uses: dorny/paths-filter@v3
         with:
@@ -56,11 +56,11 @@ jobs:
     if: needs.changes.outputs.generic == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 0
       - name: Super-Linter
-        uses: super-linter/super-linter@v6
+        uses: super-linter/super-linter@2bdd90ed3262e023ac84bf8fe35dc480721fc1f2 # v8
         env:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -83,7 +83,7 @@ jobs:
     if: needs.changes.outputs.terraform == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: hashicorp/setup-terraform@v3
       - run: terraform fmt -check -recursive
       - run: terraform init -input=false
@@ -97,7 +97,7 @@ jobs:
     if: needs.changes.outputs.kube == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: yannh/kubeconform-action@v1
         with:
           kubeconform-args: >
@@ -116,7 +116,7 @@ jobs:
     if: needs.changes.outputs.helm == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: azure/setup-helm@v4
       - run: |
           if [ -d charts ]; then
@@ -133,7 +133,7 @@ jobs:
     if: needs.changes.outputs.yaml == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: ibiqlik/action-yamllint@v3
         with:
           config_file: .github/.yamllint.yaml
@@ -145,9 +145,9 @@ jobs:
     if: needs.changes.outputs.md == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - name: markdownlint-cli2
-        uses: DavidAnson/markdownlint-cli2-action@v16
+        uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e # v20
         with:
           globs: |
             **/*.md
@@ -159,7 +159,7 @@ jobs:
     if: needs.changes.outputs.security == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: bridgecrewio/checkov-action@v12
         with:
           directory: .
