@@ -15,7 +15,6 @@ variable "cloudflare_dns_zone_name" {
   type        = string
   default     = "barnes.biz"
 }
-
 variable "talos_name" {
   description = "Talos cluster name"
   type        = string
@@ -41,7 +40,7 @@ variable "talos_node_data" {
   })
   default = {
     controlplanes = {
-      "10.5.0.2" = {
+      "192.168.178.89" = {
         install_disk = "/dev/sda"
       }
     }
