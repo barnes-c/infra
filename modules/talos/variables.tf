@@ -1,4 +1,3 @@
-
 variable "talos_name" {
   description = "Talos cluster name"
   type        = string
