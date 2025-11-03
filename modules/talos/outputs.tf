@@ -1,5 +1,5 @@
 output "talosconfig" {
-  value     = data.talos_client_configuration.node.talos_config
+  value     = data.talos_machine_configuration.controlplane
   sensitive = true
 }
 
