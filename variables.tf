@@ -40,7 +40,7 @@ variable "talos_node_data" {
   })
   default = {
     controlplanes = {
-      "192.168.178.89" = {
+      "192.168.178.20" = {
         install_disk = "/dev/sda"
       }
     }
