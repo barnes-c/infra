@@ -10,6 +10,8 @@ resource "talos_machine_configuration_apply" "controlplane" {
 
   for_each = var.talos_node_data.controlplanes
   node     = each.key
+  endpoint = each.key
+  apply_mode = "auto"
 
   config_patches = [
     templatefile("${path.module}/templates/install-disk-and-hostname.yaml.tmpl", {
