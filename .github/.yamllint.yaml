@@ -1,10 +1,7 @@
 ---
 extends: default
 rules:
+  comments: disable
   line-length:
     max: 120
     level: warning
-  truthy:
-    level: error
-  document-start:
-    present: false

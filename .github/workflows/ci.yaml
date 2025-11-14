@@ -17,6 +17,7 @@ jobs:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
+      generic: ${{ steps.filter.outputs.generic }}
       terraform: ${{ steps.filter.outputs.terraform }}
       kube: ${{ steps.filter.outputs.kube }}
       helm: ${{ steps.filter.outputs.helm }}
@@ -73,7 +74,7 @@ jobs:
           VALIDATE_DOCKERFILE_HADOLINT: true
 
           LINTER_RULES_PATH: .github
-          YAML_CONFIG_FILE: .yamllint.yml
+          YAML_CONFIG_FILE: .yamllint.yaml
           MARKDOWN_CONFIG_FILE: .markdownlint.json
           MARKDOWN_RULESETS: .markdownlint.json
 
