@@ -8,9 +8,9 @@ resource "talos_machine_configuration_apply" "controlplane" {
   client_configuration        = talos_machine_secrets.node.client_configuration
   machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
 
-  for_each = var.talos_node_data.controlplanes
-  node     = each.key
-  endpoint = each.key
+  for_each   = var.talos_node_data.controlplanes
+  node       = each.key
+  endpoint   = each.key
   apply_mode = "auto"
 
   config_patches = [
