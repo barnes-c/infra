@@ -1,0 +1,5 @@
+# This patch is required to use Cilium
+---
+cluster:
+  proxy:
+    disabled: true
