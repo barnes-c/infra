@@ -1,0 +1,68 @@
+---
+global:
+  domain: argo.barnes.biz
+
+server:
+  ingress:
+    enabled: false
+
+  service:
+    type: ClusterIP
+    ports:
+      http: 80
+      https: 443
+
+  # TLS is terminated at the Gateway and HTTP is sent to Argo
+  extraArgs:
+    - --insecure
+
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+configs:
+  cm:
+    application.instanceLabelKey: argo.argoproj.io/instance
+    timeout.reconciliation: 180s
+  rbac:
+    policy.csv: |
+      g, system:authenticated, role:admin
+    policy.default: role:readonly
+
+  secret:
+    createSecret: true
+
+controller:
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+repoServer:
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 125m
+      memory: 256Mi
+
+applicationSet:
+  enabled: true
+
+dex:
+  enabled: true
+
+redis:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      memory: 128Mi

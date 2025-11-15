@@ -1,0 +1,6 @@
+# This patch is required when installing Cilium
+---
+cluster:
+  network:
+    cni:
+      name: none
