@@ -12,4 +12,9 @@ module "talos" {
   }
 }
 
+module "kubernetes" {
+  source = "./modules/kubernetes"
 
+  kubeconfig = module.talos.kubeconfig
+  depends_on = [module.talos]
+}

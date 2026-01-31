@@ -1,4 +1,4 @@
-# Talos Kubernetes Module
+# Talos Module
 
 This module provisions a [Talos Linux](https://www.talos.dev/) Kubernetes cluster on bare metal nodes (Raspberry Pi 4/5).
 
@@ -38,14 +38,14 @@ curl -LO "https://factory.talos.dev/image/f78ef13e134c31401a21387bd8eb9019ce91d2
 # Find your SD card device
 diskutil list
 
-# Unmount the SD card (replace disk4 with your actual disk)
-diskutil unmountDisk /dev/disk4
+# Unmount the SD card
+diskutil unmountDisk /dev/diskN
 
 # Flash the image (use rdisk for faster writes on macOS)
-xzcat metal-arm64.raw.xz | sudo dd of=/dev/rdisk4 bs=4M status=progress
+xzcat metal-arm64.raw.xz | sudo dd of=/dev/rdiskN bs=4M status=progress
 
 # Eject
-diskutil eject /dev/disk4
+diskutil eject /dev/diskN
 ```
 
 ### 3. Boot the Raspberry Pi

@@ -1,13 +1,11 @@
 locals {
+  control_plane_ips = [for node in local.control_planes : node.ip]
   control_planes = {
     for k, v in var.nodes : k => v if v.role == "controlplane"
   }
-
   workers = {
     for k, v in var.nodes : k => v if v.role == "worker"
   }
-
-  control_plane_ips = [for node in local.control_planes : node.ip]
 }
 
 resource "talos_machine_secrets" "cluster" {}
@@ -48,11 +46,6 @@ resource "talos_machine_configuration_apply" "controlplane" {
 
   apply_mode = "auto"
 
-  timeouts = {
-    create = "11m"
-    update = "11m"
-  }
-
   config_patches = [
     yamlencode({
       machine = {
@@ -71,9 +64,22 @@ resource "talos_machine_configuration_apply" "controlplane" {
       }
       cluster = {
         allowSchedulingOnControlPlanes = true
+        network = {
+          cni = {
+            name = "none"
+          }
+        }
+        proxy = {
+          disabled = true
+        }
       }
     })
   ]
+
+  on_destroy = {
+    reboot = true
+    reset  = false
+  }
 }
 
 resource "talos_machine_configuration_apply" "worker" {
@@ -100,8 +106,23 @@ resource "talos_machine_configuration_apply" "worker" {
           }
         ] : []
       }
+      cluster = {
+        network = {
+          cni = {
+            name = "none"
+          }
+        }
+        proxy = {
+          disabled = true
+        }
+      }
     })
   ]
+
+  on_destroy = {
+    reboot = true
+    reset  = false
+  }
 }
 
 resource "talos_machine_bootstrap" "cluster" {
