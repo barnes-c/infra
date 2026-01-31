@@ -60,7 +60,7 @@ resource "helm_release" "cilium" {
   namespace        = "kube-system"
   repository       = "https://helm.cilium.io/"
   chart            = "cilium"
-  version          = var.cilium_version
+  version          = "1.18.0"
   create_namespace = false
 
   wait          = true
@@ -85,7 +85,7 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
-  version          = var.argocd_version
+  version          = "9.3.7"
   create_namespace = false
 
   wait    = true
