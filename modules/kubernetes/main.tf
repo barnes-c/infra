@@ -104,3 +104,36 @@ resource "helm_release" "argocd" {
     ignore_changes = all
   }
 }
+
+resource "kubernetes_manifest" "argocd_apps_root" {
+  count = var.argocd_enabled && var.argocd_apps_repo != "" ? 1 : 0
+
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = "apps-root"
+      namespace = "argocd"
+    }
+    spec = {
+      project = "default"
+      source = {
+        repoURL        = var.argocd_apps_repo
+        targetRevision = var.argocd_apps_repo_revision
+        path           = var.argocd_apps_path
+      }
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "argocd"
+      }
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+      }
+    }
+  }
+
+  depends_on = [helm_release.argocd]
+}
