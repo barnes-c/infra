@@ -114,6 +114,9 @@ resource "kubernetes_manifest" "argocd_apps_root" {
     metadata = {
       name      = "apps-root"
       namespace = "argocd"
+      finalizers = [
+        "resources-finalizer.argocd.argoproj.io"
+      ]
     }
     spec = {
       project = "default"
@@ -130,6 +133,14 @@ resource "kubernetes_manifest" "argocd_apps_root" {
         automated = {
           prune    = true
           selfHeal = true
+        }
+        retry = {
+          limit = 5
+          backoff = {
+            duration    = "5s"
+            factor      = 2
+            maxDuration = "3m"
+          }
         }
       }
     }

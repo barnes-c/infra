@@ -13,7 +13,7 @@ variable "argocd_apps_repo" {
 variable "argocd_apps_repo_revision" {
   description = "Git revision (branch, tag, commit) to track"
   type        = string
-  default     = "HEAD"
+  default     = "main"
 }
 
 variable "argocd_enabled" {
