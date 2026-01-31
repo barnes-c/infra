@@ -17,3 +17,9 @@ module "kubernetes" {
 
   depends_on = [module.talos]
 }
+
+module "cloudflare" {
+  source = "./modules/cloudflare"
+
+  apple_domain_verification_code = var.apple_domain_verification_code
+}
