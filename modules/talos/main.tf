@@ -71,6 +71,14 @@ resource "talos_machine_configuration_apply" "controlplane" {
       }
       cluster = {
         allowSchedulingOnControlPlanes = true
+        network = {
+          cni = {
+            name = "none"
+          }
+        }
+        proxy = {
+          disabled = true
+        }
       }
     })
   ]
@@ -99,6 +107,16 @@ resource "talos_machine_configuration_apply" "worker" {
             }]
           }
         ] : []
+      }
+      cluster = {
+        network = {
+          cni = {
+            name = "none"
+          }
+        }
+        proxy = {
+          disabled = true
+        }
       }
     })
   ]

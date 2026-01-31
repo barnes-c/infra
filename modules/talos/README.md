@@ -1,4 +1,4 @@
-# Talos Kubernetes Module
+# Talos Module
 
 This module provisions a [Talos Linux](https://www.talos.dev/) Kubernetes cluster on bare metal nodes (Raspberry Pi 4/5).
 
