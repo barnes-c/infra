@@ -21,9 +21,3 @@ variable "cilium_values" {
   type        = any
   default     = {}
 }
-
-variable "kubeconfig" {
-  description = "Kubeconfig content from the Talos module"
-  type        = string
-  sensitive   = true
-}
