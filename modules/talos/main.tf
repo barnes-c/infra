@@ -48,11 +48,6 @@ resource "talos_machine_configuration_apply" "controlplane" {
 
   apply_mode = "auto"
 
-  timeouts = {
-    create = "11m"
-    update = "11m"
-  }
-
   config_patches = [
     yamlencode({
       machine = {
@@ -82,6 +77,11 @@ resource "talos_machine_configuration_apply" "controlplane" {
       }
     })
   ]
+
+  on_destroy = {
+    reboot = true
+    reset  = false
+  }
 }
 
 resource "talos_machine_configuration_apply" "worker" {
@@ -120,6 +120,11 @@ resource "talos_machine_configuration_apply" "worker" {
       }
     })
   ]
+
+  on_destroy = {
+    reboot = true
+    reset  = false
+  }
 }
 
 resource "talos_machine_bootstrap" "cluster" {
