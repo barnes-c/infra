@@ -1,0 +1,10 @@
+severity:
+  - CRITICAL
+  - HIGH
+  - MEDIUM
+
+misconfiguration:
+  scanners:
+    - terraform
+    - kubernetes
+    - helm

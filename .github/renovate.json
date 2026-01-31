@@ -1,55 +1,21 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:recommended",
-        ":semanticCommits",
-        ":dependencyDashboard",
-        "helpers:pinGitHubActionDigests"
-    ],
-    "labels": [
-        "dependencies"
-    ],
-    "rangeStrategy": "bump",
-    "schedule": [
-        "at any time"
-    ],
-    "automerge": false,
-    "prHourlyLimit": 0,
-    "prConcurrentLimit": 0,
-    "pinDigests": true,
-    "packageRules": [
-        {
-            "matchManagers": [
-                "github-actions"
-            ],
-            "groupName": "github actions"
-        },
-        {
-            "matchManagers": [
-                "dockerfile"
-            ],
-            "groupName": "docker"
-        },
-        {
-            "matchManagers": [
-                "kubernetes",
-                "helm-values",
-                "helm-requirements"
-            ],
-            "groupName": "k8s"
-        },
-        {
-            "matchManagers": [
-                "terraform",
-                "terraform-version"
-            ],
-            "groupName": "terraform"
-        }
-    ],
-    "kubernetes": {
-        "managerFilePatterns": [
-            "/(^|/)(k8s|kubernetes|manifests|deployments)/.+\\.ya?ml$/",
-            "/(^|/)kustomization\\.ya?ml$/"
-        ]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":dependencyDashboard",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "labels": ["dependencies"],
+  "pinDigests": true,
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    },
+    {
+      "matchManagers": ["terraform", "terraform-version"],
+      "groupName": "terraform"
     }
+  ]
 }
