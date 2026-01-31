@@ -24,7 +24,7 @@ variable "kubernetes_version" {
 variable "talos_image" {
   description = "Default Raspberry Pi Talos image to use"
   type        = string
-  default     = "factory.talos.dev/image/ee21ef4a5ef808a9b7484cc0dda0f25075021691c8c09a276591eedb638ea1f9/v1.12.2"
+  default     = "factory.talos.dev/installer/f78ef13e134c31401a21387bd8eb9019ce91d28da9fbf7ec0f0ac2572f2fb644:v1.12.2"
 }
 
 variable "nodes" {
