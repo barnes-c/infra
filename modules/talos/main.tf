@@ -45,9 +45,9 @@ resource "talos_machine_configuration_apply" "controlplane" {
   machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
   node                        = each.value.ip
   endpoint                    = each.value.ip
-  
+
   apply_mode = "auto"
-  
+
   timeouts = {
     create = "11m"
     update = "11m"
