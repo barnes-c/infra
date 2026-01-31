@@ -41,10 +41,9 @@
         {
             "matchManagers": [
                 "terraform",
-                "terraform-version",
-                "opentofu"
+                "terraform-version"
             ],
-            "groupName": "terraform & opentofu"
+            "groupName": "terraform"
         }
     ],
     "kubernetes": {
