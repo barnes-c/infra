@@ -1,13 +1,11 @@
 locals {
+  control_plane_ips = [for node in local.control_planes : node.ip]
   control_planes = {
     for k, v in var.nodes : k => v if v.role == "controlplane"
   }
-
   workers = {
     for k, v in var.nodes : k => v if v.role == "worker"
   }
-
-  control_plane_ips = [for node in local.control_planes : node.ip]
 }
 
 resource "talos_machine_secrets" "cluster" {}
