@@ -14,8 +14,12 @@
       "groupName": "github-actions"
     },
     {
-      "matchManagers": ["terraform", "terraform-version"],
-      "groupName": "terraform"
+      "matchManagers": ["opentofu", "opentofu-version"],
+      "groupName": "opentofu"
+    },
+    {
+      "matchDatasources": ["terraform-provider", "terraform-module"],
+      "registryUrls": ["https://registry.opentofu.org"]
     }
   ]
 }
