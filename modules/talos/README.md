@@ -11,11 +11,11 @@ Talos is a modern, minimal, and secure Linux distribution designed specifically 
 - **Secure**: Reduced attack surface, automatic updates
 - **API-driven**: All configuration via `talosctl` or Terraform
 
-This brings the huge benefit that you dont have to manage the OS and only your K8s cluster
+This brings the huge benefit that you don't have to manage the OS and only your K8s cluster.
 
 ## Prerequisites
 
-- [Terraform](https://developer.hashicorp.com/terraform/) Terraform >= 1.14.4
+- [Terraform](https://developer.hashicorp.com/terraform/) >= 1.14.4
 - [talosctl](https://www.talos.dev/v1.12/introduction/getting-started/#talosctl) CLI installed
 - Raspberry Pi 4/5
 - SD card for initial boot
@@ -118,32 +118,32 @@ talosctl health
 
 ## Module Inputs
 
-| Name | Description | Type | Default |
-|------|-------------|------|---------|
-| `cluster_name` | Name of the Talos cluster | `string` | `"barnes-lab"` |
-| `cluster_vip` | Virtual IP for the cluster endpoint | `string` | required |
-| `talos_version` | Talos version | `string` | `"v1.12.2"` |
-| `kubernetes_version` | Kubernetes version | `string` | `"1.35.0"` |
-| `talos_image` | Talos factory installer image | `string` | (see variables.tf) |
-| `nodes` | Map of node configurations | `map(object)` | required |
+| Name                 | Description                         | Type          | Default            |
+| -------------------- | ----------------------------------- | ------------- | ------------------ |
+| `cluster_name`       | Name of the Talos cluster           | `string`      | `"barnes-lab"`     |
+| `cluster_vip`        | Virtual IP for the cluster endpoint | `string`      | required           |
+| `talos_version`      | Talos version                       | `string`      | `"v1.12.2"`        |
+| `kubernetes_version` | Kubernetes version                  | `string`      | `"1.35.0"`         |
+| `talos_image`        | Talos factory installer image       | `string`      | (see variables.tf) |
+| `nodes`              | Map of node configurations          | `map(object)` | required           |
 
 ### Node Configuration
 
 Each node in the `nodes` map requires:
 
-| Field | Description |
-|-------|-------------|
-| `ip` | Node IP address |
-| `role` | `"controlplane"` or `"worker"` |
+| Field          | Description                                 |
+| -------------- | ------------------------------------------- |
+| `ip`           | Node IP address                             |
+| `role`         | `"controlplane"` or `"worker"`              |
 | `install_disk` | Disk to install Talos to (e.g., `/dev/sda`) |
-| `extra_disks` | Optional list of additional disks to mount |
+| `extra_disks`  | Optional list of additional disks to mount  |
 
 ## Module Outputs
 
-| Name | Description |
-|------|-------------|
+| Name          | Description                            |
+| ------------- | -------------------------------------- |
 | `talosconfig` | Talos client configuration (sensitive) |
-| `kubeconfig` | Kubernetes kubeconfig (sensitive) |
+| `kubeconfig`  | Kubernetes kubeconfig (sensitive)      |
 
 ## References
 
