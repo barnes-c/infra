@@ -1,6 +1,15 @@
-module "cloudflare" {
-  source = "./modules/cloudflare"
+module "talos" {
+  source = "./modules/talos"
 
-  apple_domain_verification_code = var.apple_domain_verification_code
-  cloudflare_api_token           = var.cloudflare_api_token
+  cluster_vip = "192.168.1.177"
+
+  nodes = {
+    "rp-cp-01" = {
+      ip           = "192.168.1.177"
+      role         = "controlplane"
+      install_disk = "/dev/sda"
+    }
+  }
 }
+
+
