@@ -6,20 +6,38 @@
     ":dependencyDashboard",
     "helpers:pinGitHubActionDigests"
   ],
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "pinDigests": true,
   "packageRules": [
     {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "groupName": "github-actions"
     },
     {
-      "matchManagers": ["opentofu", "opentofu-version"],
+      "matchManagers": [
+        "opentofu",
+        "opentofu-version"
+      ],
       "groupName": "opentofu"
     },
     {
-      "matchDatasources": ["terraform-provider", "terraform-module"],
-      "registryUrls": ["https://registry.opentofu.org"]
+      "matchDatasources": [
+        "terraform-provider",
+        "terraform-module"
+      ],
+      "registryUrls": [
+        "https://registry.opentofu.org"
+      ]
+    },
+    {
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true
     }
   ]
 }
