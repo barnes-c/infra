@@ -60,7 +60,7 @@ resource "helm_release" "cilium" {
   namespace        = "kube-system"
   repository       = "https://helm.cilium.io/"
   chart            = "cilium"
-  version          = "1.18.6"
+  version          = "1.19.0"
   create_namespace = false
 
   wait          = true
@@ -85,7 +85,7 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
-  version          = "9.3.7"
+  version          = "9.4.1"
   create_namespace = false
 
   wait    = true
@@ -103,4 +103,48 @@ resource "helm_release" "argocd" {
   lifecycle {
     ignore_changes = all
   }
+}
+
+resource "kubernetes_manifest" "argocd_apps_root" {
+  count = var.argocd_enabled && var.argocd_apps_repo != "" ? 1 : 0
+
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = "apps-root"
+      namespace = "argocd"
+      finalizers = [
+        "resources-finalizer.argocd.argoproj.io"
+      ]
+    }
+    spec = {
+      project = "default"
+      source = {
+        repoURL        = var.argocd_apps_repo
+        targetRevision = var.argocd_apps_repo_revision
+        path           = var.argocd_apps_path
+      }
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "argocd"
+      }
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+        retry = {
+          limit = 5
+          backoff = {
+            duration    = "5s"
+            factor      = 2
+            maxDuration = "3m"
+          }
+        }
+      }
+    }
+  }
+
+  depends_on = [helm_release.argocd]
 }

@@ -8,14 +8,6 @@ This repository bootstraps the core infrastructure. Everything else is deployed 
 - **ArgoCD** manages all components after bootstrap, including itself
 - `lifecycle { ignore_changes = all }` prevents Terraform from reverting ArgoCD changes
 
-## Components
-
-|Component|Managed By|Notes|
-|---|---|---|
-|Cilium|Bootstrap: Terraform, Upgrades: ArgoCD|CNI must exist before ArgoCD can run|
-|ArgoCD|Bootstrap: Terraform, Self-managed|Manages itself and all other apps|
-|Longhorn|ArgoCD|Not in Terraform - deploy via ArgoCD|
-
 ## Prerequisites
 
 - Talos cluster with CNI disabled (`cluster.network.cni.name: none`)
