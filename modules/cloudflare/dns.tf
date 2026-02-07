@@ -2,6 +2,7 @@ resource "cloudflare_dns_record" "root_web_a" {
   for_each = data.cloudflare_zones.zones
 
   zone_id = each.value.result[0].id
+  content = "192.168.1.201"
   name    = each.value.name
   type    = "A"
   ttl     = 1
@@ -12,6 +13,7 @@ resource "cloudflare_dns_record" "wildcard_web_a" {
   for_each = data.cloudflare_zones.zones
 
   zone_id = each.value.result[0].id
+  content = "192.168.1.201"
   name    = "*"
   type    = "A"
   ttl     = 1
