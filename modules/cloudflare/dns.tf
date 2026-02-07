@@ -18,26 +18,6 @@ resource "cloudflare_dns_record" "wildcard_web_a" {
   proxied = true
 }
 
-resource "cloudflare_dns_record" "root_web_aaaa" {
-  for_each = data.cloudflare_zones.zones
-
-  zone_id = each.value.result[0].id
-  name    = each.value.name
-  type    = "AAAA"
-  ttl     = 1
-  proxied = true
-}
-
-resource "cloudflare_dns_record" "wildcard_web_aaaa" {
-  for_each = data.cloudflare_zones.zones
-
-  zone_id = each.value.result[0].id
-  name    = "*"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = true
-}
-
 resource "cloudflare_dns_record" "verify_apple_txt" {
   zone_id = data.cloudflare_zones.zones["biz"].result[0].id
   name    = data.cloudflare_zones.zones["biz"].name
