@@ -6,7 +6,6 @@ resource "cloudflare_dns_record" "root_web_a" {
   name    = each.value.name
   type    = "A"
   ttl     = 1
-  proxied = true
 }
 
 resource "cloudflare_dns_record" "wildcard_web_a" {
@@ -17,7 +16,6 @@ resource "cloudflare_dns_record" "wildcard_web_a" {
   name    = "*"
   type    = "A"
   ttl     = 1
-  proxied = true
 }
 
 resource "cloudflare_dns_record" "verify_apple_txt" {
