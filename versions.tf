@@ -1,5 +1,9 @@
 terraform {
   required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "5.16.0"
+    }
     helm = {
       source  = "hashicorp/helm"
       version = "3.1.1"
@@ -13,5 +17,5 @@ terraform {
       version = "0.10.1"
     }
   }
-  required_version = ">= 1.11.3"
+  required_version = ">= 1.11.4"
 }

@@ -1,3 +1,7 @@
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+
 provider "helm" {
   kubernetes = {
     host                   = yamldecode(module.talos.kubeconfig).clusters[0].cluster.server

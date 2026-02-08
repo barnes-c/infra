@@ -2,12 +2,10 @@
 
 Bootstrap module for Kubernetes infrastructure on a Talos Linux cluster.
 
-## GitOps Approach
+This repository bootstraps the core infrastructure. Everything else is deployed later from a separate ArgoCD repository:
 
-This module uses a **bootstrap-only** approach:
-
-- **Terraform** installs Cilium and ArgoCD initially
-- **ArgoCD** manages all components after bootstrap (including itself)
+- **Terraform**  installs Cilium and ArgoCD during initial bootstrap
+- **ArgoCD** manages all components after bootstrap, including itself
 - `lifecycle { ignore_changes = all }` prevents Terraform from reverting ArgoCD changes
 
 ## Prerequisites
