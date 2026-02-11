@@ -11,7 +11,7 @@
 | Name                             | Type          | Description                                  | Default                    |
 | -------------------------------- | ------------- | -------------------------------------------- | -------------------------- |
 | `cloudflare_zones`               | `map(string)` | Map of logical zone names to DNS zone names  | `{ biz = "barnes.biz" }`   |
-| `apple_domain_verification_code` | `string`      | Apple domain verification code (sensitive)   | —                          |
+| `apple_domain_verification_code` | `string`      | Apple domain verification code (sensitive)   | required                   |
 
 ## DNS Records
 
