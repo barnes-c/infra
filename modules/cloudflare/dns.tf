@@ -1,13 +1,21 @@
-resource "cloudflare_dns_record" "root_web_a" {
-  for_each = data.cloudflare_zones.zones
-
-  zone_id = each.value.result[0].id
-  content = "fddf397a-eb1f-4a34-957f-eb9cffeecd2d.cfargotunnel.com"
-  name    = each.value.name
-  type    = "A"
+resource "cloudflare_dns_record" "tunnel" {
+  zone_id = data.cloudflare_zones.zones["biz"].result[0].id
+  name    = data.cloudflare_zones.zones["biz"].name
+  type    = "CNAME"
   ttl     = 1
+  content = "fddf397a-eb1f-4a34-957f-eb9cffeecd2d.cfargotunnel.com"
   proxied = true
 }
+
+# resource "cloudflare_dns_record" "root_web_a" {
+#   for_each = data.cloudflare_zones.zones
+
+#   zone_id = each.value.result[0].id
+#   content = "192.168.1.201"
+#   name    = each.value.name
+#   type    = "A"
+#   ttl     = 1
+# }
 
 resource "cloudflare_dns_record" "wildcard_web_a" {
   for_each = data.cloudflare_zones.zones
