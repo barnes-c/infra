@@ -1,7 +1,11 @@
 locals {
   argocd_default_values = {
+    configs = {
+      params = {
+        "server.insecure" = true
+      }
+    }
     server = {
-      insecure = true
       service = {
         type = "ClusterIP"
       }
