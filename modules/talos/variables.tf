@@ -28,11 +28,11 @@ variable "nodes" {
 variable "talos_image" {
   description = "Default Raspberry Pi Talos image to use"
   type        = string
-  default     = "factory.talos.dev/installer/f78ef13e134c31401a21387bd8eb9019ce91d28da9fbf7ec0f0ac2572f2fb644:v1.12.2"
+  default     = "factory.talos.dev/metal-installer/22b31892199909a6c4a4167f7dd365209df47ffbe2430dc0ab48aab3d7dd0b13:v1.12.3"
 }
 
 variable "talos_version" {
   description = "Talos version"
   type        = string
-  default     = "v1.12.2"
+  default     = "v1.12.3"
 }
