@@ -7,7 +7,8 @@ module "talos" {
     "rp-cp-01" = {
       ip           = "192.168.1.177"
       role         = "controlplane"
-      install_disk = "/dev/sda"
+      install_disk = "/dev/mmcblk0"
+      extra_disks  = ["/dev/sda"]
     }
   }
 }
