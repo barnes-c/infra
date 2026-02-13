@@ -20,8 +20,8 @@ variable "nodes" {
   type = map(object({
     ip           = string
     role         = string # "controlplane" or "worker"
-    install_disk  = string
-    storage_disk  = optional(string)
+    install_disk = string
+    storage_disk = optional(string)
   }))
 }
 
