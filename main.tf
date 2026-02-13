@@ -8,7 +8,7 @@ module "talos" {
       ip           = "192.168.1.177"
       role         = "controlplane"
       install_disk = "/dev/mmcblk0"
-      extra_disks  = ["/dev/sda"]
+      storage_disk = "/dev/sda"
     }
   }
 }

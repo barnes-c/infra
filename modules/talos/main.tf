@@ -53,14 +53,12 @@ resource "talos_machine_configuration_apply" "controlplane" {
           disk  = each.value.install_disk
           image = var.talos_image
         }
-        disks = length(each.value.extra_disks) > 0 ? [
-          for disk in each.value.extra_disks : {
-            device = disk
-            partitions = [{
-              mountpoint = "/var/mnt/${basename(disk)}"
-            }]
-          }
-        ] : []
+        disks = each.value.storage_disk != null ? [{
+          device = each.value.storage_disk
+          partitions = [{
+            mountpoint = "/var/mnt/storage"
+          }]
+        }] : []
       }
       cluster = {
         allowSchedulingOnControlPlanes = true
@@ -97,14 +95,12 @@ resource "talos_machine_configuration_apply" "worker" {
           disk  = each.value.install_disk
           image = var.talos_image
         }
-        disks = length(each.value.extra_disks) > 0 ? [
-          for disk in each.value.extra_disks : {
-            device = disk
-            partitions = [{
-              mountpoint = "/var/mnt/${basename(disk)}"
-            }]
-          }
-        ] : []
+        disks = each.value.storage_disk != null ? [{
+          device = each.value.storage_disk
+          partitions = [{
+            mountpoint = "/var/mnt/storage"
+          }]
+        }] : []
       }
       cluster = {
         network = {
