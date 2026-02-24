@@ -13,15 +13,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  terraform:
-    name: Terraform
+  opentofu:
+    name: OpenTofu
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
-      - run: terraform fmt -check -recursive
-      - run: terraform init -input=false
-      - run: terraform validate
+      - uses: opentofu/setup-opentofu
+      - run: tofu fmt -check -recursive
+      - run: tofu init -input=false
+      - run: tofu validate
 
   markdown:
     name: Markdown
