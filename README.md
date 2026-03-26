@@ -6,9 +6,10 @@ Talos Linux cluster on Raspberry Pi hardware, provisioned with OpenTofu.
 
 | Node | Board | Role | IP | Storage |
 |------|-------|------|----|---------|
-| rp5b-cp-01 | RPi 5B 16GB | Control plane | `192.168.1.10` | SD card (OS) + 2× 2TB SATA SSD via Radxa Penta HAT |
-| cm5-wk-01 | RPi CM5 8GB | Worker | `192.168.1.11` | eMMC (OS) + 256GB NVMe |
-| cm5-wk-02 | RPi CM5 8GB | Worker | `192.168.1.12` | eMMC (OS) + 256GB NVMe |
+| — | — | VIP (cluster API) | `192.168.1.10` | — |
+| rp5b-cp-01 | RPi 5B 16GB | Control plane | `192.168.1.11` | SD card (OS) + 2× 2TB SATA SSD via Radxa Penta HAT |
+| cm5-wk-01 | RPi CM5 8GB | Worker | `192.168.1.12` | eMMC (OS) + 256GB NVMe |
+| cm5-wk-02 | RPi CM5 8GB | Worker | `192.168.1.13` | eMMC (OS) + 256GB NVMe |
 
 ## Step 1 — Build images
 
