@@ -7,7 +7,7 @@ variable "cluster_name" {
 variable "cluster_vip" {
   description = "Virtual IP for the cluster API endpoint"
   type        = string
-  default     = "192.168.1.10"
+  default     = "192.168.1.11"
 }
 
 variable "kubernetes_version" {
@@ -37,16 +37,16 @@ variable "nodes" {
       install_disk  = "/dev/mmcblk0"
       storage_disks = ["/dev/sda", "/dev/sdb"]
     }
-    "cm5-wk-01" = {
-      ip           = "192.168.1.12"
-      role         = "worker"
-      install_disk = "/dev/mmcblk0"
-    }
-    "cm5-wk-02" = {
-      ip           = "192.168.1.13"
-      role         = "worker"
-      install_disk = "/dev/mmcblk0"
-    }
+    # "cm5-wk-01" = {
+    #   ip           = "192.168.1.12"
+    #   role         = "worker"
+    #   install_disk = "/dev/mmcblk0"
+    # }
+    # "cm5-wk-02" = {
+    #   ip           = "192.168.1.13"
+    #   role         = "worker"
+    #   install_disk = "/dev/mmcblk0"
+    # }
   }
 }
 
