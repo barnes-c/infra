@@ -1,0 +1,18 @@
+# Schematic for Raspberry Pi 5B 16GB with Radxa Penta SATA HAT v1.1
+---
+overlay:
+  name: rpi_5
+  image: siderolabs/sbc-raspberrypi
+  options:
+    configTxtAppend: |
+      # Enable the PCIe FFC connector
+      dtparam=pciex1
+      # Force PCIe Gen 3 for maximum throughput (JMS585 supports Gen 3x2)
+      # The RPi5 PCIe lane is officially Gen 2; Gen 3 works but is unsupported
+      # by Broadcom. Use pciex1_gen=2 here if you experience instability.
+      dtparam=pciex1_gen=3
+customization:
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools
+      - siderolabs/util-linux-tools

@@ -1,0 +1,14 @@
+# Schematic for Raspberry Pi CM5 8GB on Sipeed NanoCluster carrier board
+---
+overlay:
+  name: rpi_5
+  image: siderolabs/sbc-raspberrypi
+  options:
+    configTxtAppend: |
+      dtparam=pciex1
+      dtparam=pciex1_gen=3
+customization:
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools
+      - siderolabs/util-linux-tools
