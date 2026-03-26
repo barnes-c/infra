@@ -32,18 +32,18 @@ variable "nodes" {
   }))
   default = {
     "rp5b-cp-01" = {
-      ip            = "192.168.1.11"
+      ip            = "192.168.1.10"
       role          = "controlplane"
       install_disk  = "/dev/mmcblk0"
       storage_disks = ["/dev/sda", "/dev/sdb"]
     }
     # "cm5-wk-01" = {
-    #   ip           = "192.168.1.12"
+    #   ip           = "192.168.1.11"
     #   role         = "worker"
     #   install_disk = "/dev/mmcblk0"
     # }
     # "cm5-wk-02" = {
-    #   ip           = "192.168.1.13"
+    #   ip           = "192.168.1.12"
     #   role         = "worker"
     #   install_disk = "/dev/mmcblk0"
     # }
