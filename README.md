@@ -25,7 +25,7 @@ This uploads schematics to [factory.talos.dev](https://factory.talos.dev) and do
 
 ```sh
 xz -d images/talos-rpi5b.raw.xz
-sudo dd if=images/talos-rpi5b.raw of=/dev/sdX bs=4M status=progress conv=fsync
+sudo dd if=images/talos-rpi5b.raw of=/dev/rdiskX bs=4M 
 ```
 
 Insert the SD card into the RPi5B and power on. The two SSDs on the Penta SATA HAT
@@ -40,7 +40,7 @@ appear as `/dev/sda` and `/dev/sdb` after boot.
 
    ```sh
    xz -d images/talos-cm5.raw.xz
-   sudo dd if=images/talos-cm5.raw of=/dev/sdX bs=4M status=progress conv=fsync
+   sudo dd if=images/talos-cm5.raw of=/dev/rdiskX bs=4M
    ```
 
 ## Step 3 — Provision the cluster
