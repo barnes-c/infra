@@ -1,12 +1,4 @@
 locals {
-  control_plane_ips = [for node in local.control_planes : node.ip]
-  control_planes = {
-    for k, v in var.nodes : k => v if v.role == "controlplane"
-  }
-  workers = {
-    for k, v in var.nodes : k => v if v.role == "worker"
-  }
-
   common_patch = {
     machine = {
       time = {
@@ -21,6 +13,7 @@ locals {
         rbac                 = true
         apidCheckExtKeyUsage = true
         diskQuotaSupport     = true
+        seccompDefaultAction = "RuntimeDefault"
         kubePrism = {
           enabled = true
           port    = 7445
@@ -32,6 +25,13 @@ locals {
         }
       }
     }
+  }
+  control_plane_ips = [for node in local.control_planes : node.ip]
+  control_planes = {
+    for k, v in var.nodes : k => v if v.role == "controlplane"
+  }
+  workers = {
+    for k, v in var.nodes : k => v if v.role == "worker"
   }
 }
 
