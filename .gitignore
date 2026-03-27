@@ -6,7 +6,6 @@ secrets.yaml
 rendered/
 
 talos/.terraform.lock.hcl
-talos/.terraform.tfstate.lock.info
 talos/.terraform/
 talos/.terraformrc
 talos/*_override.tf
@@ -16,6 +15,4 @@ talos/*.tfvars.json
 talos/override.tf
 talos/override.tf.json
 talos/terraform.rc
-talos/terraform.tfstate
-talos/terraform.tfstate.backup
-talos/terraform.tfstate.d/
+talos/terraform.tfstate*
