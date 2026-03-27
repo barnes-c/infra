@@ -110,8 +110,9 @@ resource "talos_machine_configuration_apply" "controlplane" {
   ]
 
   on_destroy = {
-    reboot = true
-    reset  = true
+    graceful = false
+    reboot   = true
+    reset    = true
   }
 }
 
