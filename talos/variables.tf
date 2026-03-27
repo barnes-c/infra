@@ -25,7 +25,7 @@ variable "nodes" {
     storage_disks = optional(list(string))
   }))
   default = {
-    "rp5b-cp-01" = {
+    "rpi5b-cp-01" = {
       ip            = "192.168.1.11"
       role          = "controlplane"
       install_disk  = "/dev/mmcblk0"
@@ -64,8 +64,8 @@ variable "talos_image_cm5" {
   default     = "factory.talos.dev/metal-installer/e9102d943a06092710378970fbaef3e411dd14f1bc636db0546f83d771cbee7d:v1.12.6" # Populated automatically by `make schematics`
 }
 
-variable "talos_image_rp5b" {
-  description = "Talos factory installer image for Raspberry Pi 5B (schematic: rp5b with Penta SATA HAT)"
+variable "talos_image_rpi5b" {
+  description = "Talos factory installer image for Raspberry Pi 5B (schematic: rpi5b with Penta SATA HAT)"
   type        = string
   default     = "factory.talos.dev/metal-installer/e9102d943a06092710378970fbaef3e411dd14f1bc636db0546f83d771cbee7d:v1.12.6" # Populated automatically by `make schematics`
 }
