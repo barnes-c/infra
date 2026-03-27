@@ -31,14 +31,20 @@ variable "nodes" {
       install_disk  = "/dev/mmcblk0"
       storage_disks = ["/dev/sda", "/dev/sdb"]
     }
+    "rpi4b-wk-01" = {
+      ip            = "192.168.1.12"
+      role          = "worker"
+      install_disk  = "/dev/mmcblk0"
+      storage_disks = ["/dev/sda"]
+    }
     # "cm5-wk-01" = {
-    #   ip            = "192.168.1.12"
+    #   ip            = "192.168.1.13"
     #   role          = "worker"
     #   install_disk  = "/dev/mmcblk0"
     #   storage_disks = ["/dev/nvme0n1"]
     # }
     # "cm5-wk-02" = {
-    #   ip            = "192.168.1.13"
+    #   ip            = "192.168.1.14"
     #   role          = "worker"
     #   install_disk  = "/dev/mmcblk0"
     #   storage_disks = ["/dev/nvme0n1"]
@@ -46,16 +52,22 @@ variable "nodes" {
   }
 }
 
+variable "talos_image_rpi4b" {
+  description = "Talos factory installer image for Raspberry Pi 4B (schematic: rp4b)"
+  type        = string
+  default     = "factory.talos.dev/metal-installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d:v1.12.6" # Populated automatically by `make schematics`
+}
+
 variable "talos_image_cm5" {
   description = "Talos factory installer image for Raspberry Pi CM5 (schematic: cm5 on NanoCluster)"
   type        = string
-  default     = "factory.talos.dev/metal-installer/b00ac8400b2ad823d3d5e972136dd89c0d960d58e0ff2b12d5b8b87e9d53e670:v1.12.6"
+  default     = "factory.talos.dev/metal-installer/e9102d943a06092710378970fbaef3e411dd14f1bc636db0546f83d771cbee7d:v1.12.6" # Populated automatically by `make schematics`
 }
 
 variable "talos_image_rp5b" {
   description = "Talos factory installer image for Raspberry Pi 5B (schematic: rp5b with Penta SATA HAT)"
   type        = string
-  default     = "factory.talos.dev/metal-installer/ac60af25d2ca703f09730b242d66cbad86146ff38433fcda94f63e668e21f1fe:v1.12.6"
+  default     = "factory.talos.dev/metal-installer/e9102d943a06092710378970fbaef3e411dd14f1bc636db0546f83d771cbee7d:v1.12.6" # Populated automatically by `make schematics`
 }
 
 variable "talos_version" {

@@ -89,7 +89,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
         }
         install = {
           disk  = each.value.install_disk
-          image = startswith(each.key, "rp5b-") ? var.talos_image_rp5b : var.talos_image_cm5
+          image = startswith(each.key, "rp5b-") ? var.talos_image_rp5b : startswith(each.key, "rpi4b-") ? var.talos_image_rpi4b : var.talos_image_cm5
         }
         disks = each.value.storage_disks != null ? [
           for idx, disk in each.value.storage_disks : {
@@ -130,7 +130,7 @@ resource "talos_machine_configuration_apply" "worker" {
       machine = {
         install = {
           disk  = each.value.install_disk
-          image = startswith(each.key, "rp5b-") ? var.talos_image_rp5b : var.talos_image_cm5
+          image = startswith(each.key, "rp5b-") ? var.talos_image_rp5b : startswith(each.key, "rpi4b-") ? var.talos_image_rpi4b : var.talos_image_cm5
         }
         disks = each.value.storage_disks != null ? [
           for idx, disk in each.value.storage_disks : {
