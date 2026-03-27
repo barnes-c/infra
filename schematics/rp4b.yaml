@@ -1,0 +1,10 @@
+# Schematic for Raspberry Pi 4B 8GB
+---
+overlay:
+  name: rpi_generic
+  image: siderolabs/sbc-raspberrypi
+customization:
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools
+      - siderolabs/util-linux-tools
