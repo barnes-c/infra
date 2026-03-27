@@ -59,3 +59,17 @@ tofu apply
 tofu output -raw kubeconfig > $HOME/.kube/config
 tofu output -raw talosconfig > $HOME/.talos/config
 ```
+
+## Step 4 — Approve kubelet CSRs
+
+Kubelet server certificate rotation is enabled. Kubernetes does not auto-approve kubelet
+serving CSRs, so they must be approved manually after bootstrap:
+
+```sh
+kubectl get csr
+kubectl certificate approve <csr-name>
+```
+
+This is required for `kubectl exec`, `kubectl logs`, and `kubectl port-forward` to work.
+CSRs will need re-approving when they rotate (~1 year). TODO:
+[kubelet-csr-approver](https://github.com/postfinance/kubelet-csr-approver) in ArgoCD
