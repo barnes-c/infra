@@ -10,7 +10,7 @@ locals {
   common_patch = {
     machine = {
       time = {
-        servers = ["time.cloudflare.com", "ntp.ubuntu.com"]
+        servers = ["162.159.200.1", "216.239.35.0"]
       }
       kubelet = {
         extraArgs = {
@@ -19,7 +19,6 @@ locals {
       }
       features = {
         rbac                 = true
-        stableHostname       = true
         apidCheckExtKeyUsage = true
         diskQuotaSupport     = true
         kubePrism = {
@@ -45,6 +44,8 @@ data "talos_client_configuration" "cluster" {
 }
 
 data "talos_machine_configuration" "controlplane" {
+  for_each = local.control_planes
+
   cluster_name     = var.cluster_name
   cluster_endpoint = "https://${var.cluster_vip}:6443"
   machine_type     = "controlplane"
@@ -55,6 +56,8 @@ data "talos_machine_configuration" "controlplane" {
 }
 
 data "talos_machine_configuration" "worker" {
+  for_each = local.workers
+
   cluster_name     = var.cluster_name
   cluster_endpoint = "https://${var.cluster_vip}:6443"
   machine_type     = "worker"
@@ -68,7 +71,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
   for_each = local.control_planes
 
   client_configuration        = talos_machine_secrets.cluster.client_configuration
-  machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
+  machine_configuration_input = data.talos_machine_configuration.controlplane[each.key].machine_configuration
   node                        = each.value.ip
   endpoint                    = each.value.ip
   apply_mode                  = "auto"
@@ -77,7 +80,13 @@ resource "talos_machine_configuration_apply" "controlplane" {
     yamlencode(local.common_patch),
     yamlencode({
       machine = {
-        network = { hostname = each.key }
+        network = {
+          interfaces = [{
+            interface = "end0"
+            dhcp      = true
+            vip       = { ip = var.cluster_vip }
+          }]
+        }
         install = {
           disk  = each.value.install_disk
           image = startswith(each.key, "rp5b-") ? var.talos_image_rp5b : var.talos_image_cm5
@@ -110,7 +119,7 @@ resource "talos_machine_configuration_apply" "worker" {
   for_each = local.workers
 
   client_configuration        = talos_machine_secrets.cluster.client_configuration
-  machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
+  machine_configuration_input = data.talos_machine_configuration.worker[each.key].machine_configuration
   node                        = each.value.ip
   endpoint                    = each.value.ip
   apply_mode                  = "auto"
@@ -119,7 +128,6 @@ resource "talos_machine_configuration_apply" "worker" {
     yamlencode(local.common_patch),
     yamlencode({
       machine = {
-        network = { hostname = each.key }
         install = {
           disk  = each.value.install_disk
           image = startswith(each.key, "rp5b-") ? var.talos_image_rp5b : var.talos_image_cm5
