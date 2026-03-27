@@ -32,14 +32,16 @@ variable "nodes" {
       storage_disks = ["/dev/sda", "/dev/sdb"]
     }
     # "cm5-wk-01" = {
-    #   ip           = "192.168.1.12"
-    #   role         = "worker"
-    #   install_disk = "/dev/mmcblk0"
+    #   ip            = "192.168.1.12"
+    #   role          = "worker"
+    #   install_disk  = "/dev/mmcblk0"
+    #   storage_disks = ["/dev/nvme0n1"]
     # }
     # "cm5-wk-02" = {
-    #   ip           = "192.168.1.13"
-    #   role         = "worker"
-    #   install_disk = "/dev/mmcblk0"
+    #   ip            = "192.168.1.13"
+    #   role          = "worker"
+    #   install_disk  = "/dev/mmcblk0"
+    #   storage_disks = ["/dev/nvme0n1"]
     # }
   }
 }
