@@ -7,13 +7,13 @@ locals {
       kubelet = {
         extraArgs = {
           rotate-server-certificates = "true"
+          seccomp-default            = "true"
         }
       }
       features = {
         rbac                 = true
         apidCheckExtKeyUsage = true
         diskQuotaSupport     = true
-        seccompDefaultAction = "RuntimeDefault"
         kubePrism = {
           enabled = true
           port    = 7445
