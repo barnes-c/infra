@@ -3,6 +3,11 @@
 overlay:
   name: rpi_generic
   image: siderolabs/sbc-raspberrypi
+  options:
+    configTxtAppend: |
+      dtoverlay=disable-bt
+      dtoverlay=disable-wifi
+      arm_boost=1
 customization:
   systemExtensions:
     officialExtensions:

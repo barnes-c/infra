@@ -55,19 +55,19 @@ variable "nodes" {
 variable "talos_image_rpi4b" {
   description = "Talos factory installer image for Raspberry Pi 4B (schematic: rp4b)"
   type        = string
-  default     = "factory.talos.dev/metal-installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d:v1.12.6" # Populated automatically by `make schematics`
+  default     = "factory.talos.dev/metal-installer/258bae9381b8132728d634f842c85f8c881717c57f95503b0c311602ee572d1d:v1.12.6" # Populated automatically by `make schematics`
 }
 
 variable "talos_image_cm5" {
   description = "Talos factory installer image for Raspberry Pi CM5 (schematic: cm5 on NanoCluster)"
   type        = string
-  default     = "factory.talos.dev/metal-installer/e9102d943a06092710378970fbaef3e411dd14f1bc636db0546f83d771cbee7d:v1.12.6" # Populated automatically by `make schematics`
+  default     = "factory.talos.dev/metal-installer/313982b680c2507b839ad4cd287181a641ed9f9a9659294b744e840cb6576fe6:v1.12.6" # Populated automatically by `make schematics`
 }
 
 variable "talos_image_rpi5b" {
   description = "Talos factory installer image for Raspberry Pi 5B (schematic: rpi5b with Penta SATA HAT)"
   type        = string
-  default     = "factory.talos.dev/metal-installer/e9102d943a06092710378970fbaef3e411dd14f1bc636db0546f83d771cbee7d:v1.12.6" # Populated automatically by `make schematics`
+  default     = "factory.talos.dev/metal-installer/313982b680c2507b839ad4cd287181a641ed9f9a9659294b744e840cb6576fe6:v1.12.6" # Populated automatically by `make schematics`
 }
 
 variable "talos_version" {
