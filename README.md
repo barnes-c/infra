@@ -8,8 +8,8 @@ Talos Linux cluster on Raspberry Pi hardware, provisioned with OpenTofu.
 |------|-------|------|----|---------|
 | — | — | VIP (cluster API) | `192.168.1.10` | — |
 | rp5b-cp-01 | RPi 5B 16GB | Control plane | `192.168.1.11` | SD card + 2× 2TB SATA SSD via Radxa Penta HAT |
-| cm5-wk-01 | RPi CM5 8GB | Worker | `192.168.1.12` | eMMC + 256GB NVMe |
-| cm5-wk-02 | RPi CM5 8GB | Worker | `192.168.1.13` | eMMC + 256GB NVMe |
+| cm5-wk-01 | RPi CM5 8GB | Worker | `192.168.1.12` | 256GB NVMe |
+| cm5-wk-02 | RPi CM5 8GB | Worker | `192.168.1.13` | 256GB NVMe |
 
 ## Step 1 — Build images
 
@@ -56,6 +56,6 @@ appear as `/dev/sda` and `/dev/sdb` after boot.
 cd talos/
 tofu init
 tofu apply
-tofu output -raw kubeconfig > ~/.kube/config
-tofu output -raw talosconfig > ~/.talos/config
+tofu output -raw kubeconfig > $HOME/.kube/config
+tofu output -raw talosconfig > $HOME/.talos/config
 ```
