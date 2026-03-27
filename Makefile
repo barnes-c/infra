@@ -23,7 +23,7 @@ $(RPI5B_ID_FILE): $(RPI5B_SCHEMATIC)
 		--data-binary @$< \
 	| jq -r .id > $@
 	@echo "RPi5B schematic ID: $$(cat $@)"
-	@sed -i '' "/talos_image_rp5b/,/default/ s|default.*=.*\".*\"|default     = \"$(FACTORY_HOST)/metal-installer/$$(cat $@):$(TALOS_VERSION)\"|" talos/variables.tf
+	@sed -i '' "/talos_image_rpi5b/,/default/ s|default.*=.*\".*\"|default     = \"$(FACTORY_HOST)/metal-installer/$$(cat $@):$(TALOS_VERSION)\"|" talos/variables.tf
 	@echo "Updated talos/variables.tf with RPi5B image URL"
 
 $(RPI4B_ID_FILE): $(RPI4B_SCHEMATIC)

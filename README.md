@@ -7,7 +7,7 @@ Talos Linux cluster on Raspberry Pi hardware, provisioned with OpenTofu.
 | Node | Board | Role | IP | Storage |
 |------|-------|------|----|---------|
 | — | — | VIP (cluster API) | `192.168.1.10` | — |
-| rp5b-cp-01 | [Raspberry Pi 5](https://www.raspberrypi.com/products/raspberry-pi-5/) 16GB | Control plane | `192.168.1.11` | SD card + 2× 2TB SATA SSD via Radxa Penta HAT |
+| rpi5b-cp-01 | [Raspberry Pi 5](https://www.raspberrypi.com/products/raspberry-pi-5/) 16GB | Control plane | `192.168.1.11` | SD card + 2× 2TB SATA SSD via Radxa Penta HAT |
 | rpi4b-wk-01 | [Raspberry Pi 4B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) 8GB | Worker | `192.168.1.12` | SD card + 500GB USB SSD |
 | cm5-wk-01 | [Raspberry Pi CM5](https://www.raspberrypi.com/products/compute-module-5/) 8GB | Worker | `192.168.1.13` | 256GB NVMe |
 | cm5-wk-02 | [Raspberry Pi CM5](https://www.raspberrypi.com/products/compute-module-5/) 8GB | Worker | `192.168.1.14` | 256GB NVMe |
