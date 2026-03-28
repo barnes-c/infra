@@ -2,7 +2,7 @@ locals {
   common_patch = {
     machine = {
       time = {
-        servers = ["162.159.200.1", "216.239.35.0"]
+        servers = ["162.159.200.1", "216.239.35.0", "2606:4700:f1::1", "2001:4860:4806::"]
       }
       kubelet = {
         extraArgs = {
