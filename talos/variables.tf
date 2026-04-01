@@ -19,23 +19,43 @@ variable "kubernetes_version" {
 variable "nodes" {
   description = "Map of node configurations. Key is used as the hostname."
   type = map(object({
-    ip            = string
-    role          = string # "controlplane" or "worker"
-    install_disk  = string
-    storage_disks = optional(list(string))
+    ip           = string
+    role         = string # "controlplane" or "worker"
+    install_disk = string
+    storage_disks = optional(list(object({
+      device = string
+      partitions = list(object({
+        mountpoint = string
+        size       = optional(string)
+      }))
+    })))
   }))
   default = {
     "rpi5b-cp-01" = {
-      ip            = "192.168.1.11"
-      role          = "controlplane"
-      install_disk  = "/dev/mmcblk0"
-      storage_disks = ["/dev/sda", "/dev/sdb"]
+      ip           = "192.168.1.11"
+      role         = "controlplane"
+      install_disk = "/dev/mmcblk0"
+      storage_disks = [
+        {
+          device     = "/dev/sda"
+          partitions = [{ mountpoint = "/var/lib/etcd", size = "20GiB" }]
+        },
+        {
+          device     = "/dev/sdb"
+          partitions = [{ mountpoint = "/var/mnt/storage1" }]
+        },
+      ]
     }
     "rpi4b-wk-01" = {
-      ip            = "192.168.1.12"
-      role          = "worker"
-      install_disk  = "/dev/mmcblk0"
-      storage_disks = ["/dev/sda"]
+      ip           = "192.168.1.12"
+      role         = "worker"
+      install_disk = "/dev/mmcblk0"
+      storage_disks = [
+        {
+          device     = "/dev/sda"
+          partitions = [{ mountpoint = "/var/mnt/storage0" }]
+        },
+      ]
     }
     # "cm5-wk-01" = {
     #   ip            = "192.168.1.13"

@@ -102,9 +102,14 @@ resource "talos_machine_configuration_apply" "controlplane" {
           image = startswith(each.key, "rp5b-") ? var.talos_image_rpi5b : startswith(each.key, "rpi4b-") ? var.talos_image_rpi4b : var.talos_image_cm5
         }
         disks = each.value.storage_disks != null ? [
-          for idx, disk in each.value.storage_disks : {
-            device     = disk
-            partitions = [{ mountpoint = "/var/mnt/storage${idx}" }]
+          for disk in each.value.storage_disks : {
+            device = disk.device
+            partitions = [
+              for p in disk.partitions : merge(
+                { mountpoint = p.mountpoint },
+                p.size != null ? { size = p.size } : {}
+              )
+            ]
           }
         ] : []
       }
@@ -144,9 +149,14 @@ resource "talos_machine_configuration_apply" "worker" {
           image = startswith(each.key, "rp5b-") ? var.talos_image_rpi5b : startswith(each.key, "rpi4b-") ? var.talos_image_rpi4b : var.talos_image_cm5
         }
         disks = each.value.storage_disks != null ? [
-          for idx, disk in each.value.storage_disks : {
-            device     = disk
-            partitions = [{ mountpoint = "/var/mnt/storage${idx}" }]
+          for disk in each.value.storage_disks : {
+            device = disk.device
+            partitions = [
+              for p in disk.partitions : merge(
+                { mountpoint = p.mountpoint },
+                p.size != null ? { size = p.size } : {}
+              )
+            ]
           }
         ] : []
       }
