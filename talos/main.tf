@@ -7,7 +7,6 @@ locals {
       install = {
         extraKernelArgs = [
           "panic=10",
-          "panic_on_oops=1",
           "printk.always_kmsg_dump=Y",
           "log_buf_len=32M"
         ]
