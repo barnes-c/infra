@@ -4,6 +4,17 @@ locals {
       time = {
         servers = ["162.159.200.1", "216.239.35.0", "2606:4700:f1::1", "2001:4860:4806::"]
       }
+      install = {
+        extraKernelArgs = [
+          "panic=10",
+          "panic_on_oops=1",
+          "printk.always_kmsg_dump=Y",
+          "log_buf_len=32M"
+        ]
+      }
+      sysctls = {
+        "kernel.printk" = "8 4 1 7"
+      }
       kubelet = {
         extraArgs = {
           rotate-server-certificates = "true"
