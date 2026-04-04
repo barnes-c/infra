@@ -4,13 +4,6 @@ locals {
       time = {
         servers = ["162.159.200.1", "216.239.35.0", "2606:4700:f1::1", "2001:4860:4806::"]
       }
-      install = {
-        extraKernelArgs = [
-          "panic=10",
-          "printk.always_kmsg_dump=Y",
-          "log_buf_len=32M"
-        ]
-      }
       sysctls = {
         "kernel.printk" = "8 4 1 7"
       }
@@ -120,6 +113,15 @@ resource "talos_machine_configuration_apply" "controlplane" {
         }
         network = { cni = { name = "none" } }
         proxy   = { disabled = true }
+      }
+    }),
+    yamlencode({
+      apiVersion = "v1alpha1"
+      kind       = "EthernetConfig"
+      name       = "end0"
+      features = {
+        "tx-tcp-segmentation" = false
+        "tx-scatter-gather"   = false
       }
     }),
   ]

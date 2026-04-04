@@ -38,7 +38,7 @@ variable "nodes" {
       storage_disks = [
         {
           device     = "/dev/sda"
-          partitions = [{ mountpoint = "/var/lib/etcd", size = "20GiB" }]
+          partitions = [{ mountpoint = "/var/lib/etcd", size = "20 GB" }]
         },
         {
           device     = "/dev/sdb"
